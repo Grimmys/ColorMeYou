@@ -1,4 +1,6 @@
 # upload sprites here
+# animation cycles are stored in lists based on action and direction
+# some standalones also included 
 
 import pygame
 import sys
