@@ -3,6 +3,7 @@
 import pygame
 
 screen = pygame.display.set_mode((1280, 720))
+# could probably move this into constants since we will have an interact sound later
 interact_sound = pygame.mixer.Sound('assets\sounds\interact_sound.mp3')
 interact_sound.set_volume(0.4)
 
