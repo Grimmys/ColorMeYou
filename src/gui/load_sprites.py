@@ -3,36 +3,39 @@
 # some standalones also included 
 
 import pygame
-import sys
+
 
 class SpriteSheet:
     def __init__(self, filename):
         """Load the sheet."""
         self.filename = filename
         self.spritesheet = pygame.image.load(filename)
-    #load from list of rects
+
+    # load from list of rects
     def load_strip(self, rects, lis, dimx, dimy):
         for rect in rects:
             sprite = pygame.Surface((dimx, dimy), pygame.SRCALPHA)
-            sprite.blit(self.spritesheet,(0, 0), rect)
+            sprite.blit(self.spritesheet, (0, 0), rect)
             lis.append(sprite)
-    #load single img
+
+    # load single img
     def image_at(self, rect, dimx, dimy):
         sprite = pygame.Surface((dimx, dimy), pygame.SRCALPHA)
         sprite.blit(self.spritesheet, (0, 0), rect)
         return sprite
 
+
 # load in
-mc_ss = SpriteSheet('assets\images\mc_ss.png')
-misc_ss = SpriteSheet('assets\images\misc_ss.png')
-lit_buttons = SpriteSheet('assets\images\lit_buttons.png')
+mc_ss = SpriteSheet("assets/images/mc_ss.png")
+misc_ss = SpriteSheet("assets/images/misc_ss.png")
+lit_buttons = SpriteSheet("assets/images/lit_buttons.png")
 
 # right facing idle
 mc_right_idle = []
 mc_right_idle_coords = []
 for i in range(0, 7):
     mc_right_idle_coords.append((i * 96, 0, i * 96 + 96, 480))
-# print(mc_right_idle_coords)
+
 mc_ss.load_strip(mc_right_idle_coords, mc_right_idle, 96, 480)
 
 # right facing walk
@@ -40,7 +43,7 @@ mc_right_walk = []
 mc_right_walk_coords = []
 for i in range(0, 4):
     mc_right_walk_coords.append((i * 96, 480, i * 96 + 96, 240))
-# print(mc_right_walk_coords)
+
 mc_ss.load_strip(mc_right_walk_coords, mc_right_walk, 96, 480)
 
 # right jump
@@ -51,14 +54,14 @@ mc_right_jump = mc_ss.image_at(mc_right_jump_rect, 96, 480)
 mc_r_interact_rect = (96, 240, 192, 360)
 mc_r_interact = mc_ss.image_at(mc_r_interact_rect, 96, 480)
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 
 # left idle
 mc_left_idle = []
 mc_left_idle_coords = []
 for i in range(0, 7):
     mc_left_idle_coords.append((i * 96, 360, i * 96 + 96, 480))
-# print (mc_left_idle_coords)
+
 mc_ss.load_strip(mc_left_idle_coords, mc_left_idle, 96, 480)
 
 # left facing walk
@@ -76,13 +79,13 @@ mc_lj = mc_ss.image_at(mc_lj_rect, 96, 480)
 mc_l_interact_rect = (0, 600, 96, 780)
 mc_l_interact = mc_ss.image_at(mc_l_interact_rect, 96, 480)
 
-#------------------------------------------------------
+# ------------------------------------------------------
 
 # death
 mc_death_rect = (0, 780, 96, 840)
 mc_death = mc_ss.image_at(mc_death_rect, 96, 480)
 
-#------------------------------------------------------
+# ------------------------------------------------------
 
 # papier-san
 
@@ -92,7 +95,7 @@ for i in range(0, 3):
     paper_coords.append((i * 80, 0, i * 80 + 80, 96))
 misc_ss.load_strip(paper_coords, paper, 80, 96)
 
-#CMY toggler, c - 0, m - 1, y - 2
+# CMY toggler, c - 0, m - 1, y - 2
 
 toggles = []
 toggles_coords = []

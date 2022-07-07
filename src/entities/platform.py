@@ -13,10 +13,11 @@
 
 import pygame
 
+
 class Platform:
-    def __init__(self, color, screen, x, y, x_len, y_len, state):
+    def __init__(self, color, screen, x_coord, y_coord, width, height, state):
         self.color = color
         self.screen = screen
-        self.pos = (x, y)
-        self.rect = pygame.Rect(x, y, x_len, y_len)
+        self.position = (x_coord, y_coord)
+        self.rect = pygame.Rect(x_coord, y_coord, width, height)
         self.state = state
