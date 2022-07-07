@@ -1,7 +1,6 @@
 import pygame
 
 if __name__ == "__main__":
-    print("Hello World!")
     pygame.init()
     screen = pygame.display.set_mode((1280, 720))
     from main_menu import MainMenu

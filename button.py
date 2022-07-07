@@ -1,6 +1,7 @@
 # button class
 
 import pygame
+pygame.init()
 
 screen = pygame.display.set_mode((1280, 720))
 # could probably move this into constants since we will have an interact sound later

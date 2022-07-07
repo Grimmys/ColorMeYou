@@ -4,7 +4,7 @@
 # play music
 
 import pygame, sys
-from stage_1 import Stage
+from tutorial import Tutorial
 from button import Button
 from load_sprites import start_button_img, settings_button_img
 
@@ -31,7 +31,7 @@ class MainMenu():
                     if event.key == pygame.K_q:
                         sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.start_button.navigate(Stage)
+                    self.start_button.navigate(Tutorial)
 
             self.screen.blit(background, (0, 0))
             self.start_button.detect_hover()

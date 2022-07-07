@@ -5,6 +5,13 @@ import pygame, sys
 # load in three colored backgrounds
 # keep track of state stuff
 
+yellow_bg = pygame.image.load('assets\images\y_mode_bg.png')
+cyan_bg = pygame.image.load('assets\images\c_mode_bg.png')
+magenta_bg = pygame.image.load('assets\images\y_mode_bg.png')
+
+# start in bottom left corner of img
+bg_img_position = (-720, -780)
+
 class Stage:
     def __init__(self, screen):
         self.screen = screen
@@ -21,6 +28,6 @@ class Stage:
                     if event.key == pygame.K_q:
                         sys.exit()
 
-            self.screen.fill((225, 225, 225))
+            self.screen.blit(yellow_bg, bg_img_position)
             pygame.display.update()
 
