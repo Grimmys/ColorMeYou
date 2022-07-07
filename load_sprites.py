@@ -23,9 +23,9 @@ class SpriteSheet:
         return sprite
 
 # load in
-mc_ss = SpriteSheet('assets\mc_ss.png')
-misc_ss = SpriteSheet('assets\misc_ss.png')
-lit_buttons = SpriteSheet('assets\lit_buttons.png')
+mc_ss = SpriteSheet('assets\images\mc_ss.png')
+misc_ss = SpriteSheet('assets\images\misc_ss.png')
+lit_buttons = SpriteSheet('assets\images\lit_buttons.png')
 
 # right facing idle
 mc_right_idle = []
@@ -116,7 +116,7 @@ misc_ss.load_strip(cartridge_coords, cartridges, 23, 21)
 
 # main menu buttons
 start_button_rect = (0, 0, 568, 112)
-start_button = lit_buttons.image_at(start_button_rect, 568, 112)
+start_button_img = lit_buttons.image_at(start_button_rect, 568, 112)
 
-settings_button_rect = (0, 112, 568, 46)
-settings_button = lit_buttons.image_at(settings_button_rect, 568, 112)
+settings_button_rect = (0, 112, 568, 146)
+settings_button_img = lit_buttons.image_at(settings_button_rect, 568, 112)
