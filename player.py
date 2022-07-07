@@ -22,7 +22,8 @@ class Player():
         self.pos = vec((10, 10))
         self.vel = vec(0, 0)
         self.accel = vec(0, 0)
-        self.friction = -0.12
+        self.ACCELERATION = 0.5
+        self.FRICTION = -0.12
 
         # blit animation tracker
         self.walk_count = 0
@@ -47,7 +48,17 @@ class Player():
                 if event.key == pygame.K_e:
                     self.states[2] = False
 
-
+    def move(self):
+        # reset accel to 0
+        self.accel = vec(0,0)
+        if self.states[0] == True: 
+            self.accel.x = -self.ACCELERATION
+        if self.states[1] == True:
+            self.accel.x = self.ACCELERATION
+        
+        self.accel.x += self.vel.x * self.FRICTION
+        self.vel += self.accel
+        self.pos += self.vel + 0.5 * self.accel
 
     def walk_counter(self):
         # find first item in self.states that is true
