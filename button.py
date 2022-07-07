@@ -3,6 +3,8 @@
 import pygame
 
 screen = pygame.display.set_mode((1280, 720))
+interact_sound = pygame.mixer.Sound('assets\sounds\interact_sound.mp3')
+interact_sound.set_volume(0.4)
 
 class Button():
     def __init__(self, image, screen, x, y, x_len, y_len):
@@ -16,10 +18,10 @@ class Button():
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.image, self.pos)
             if not self.played:
-                pygame.mixer.Sound('assets\sounds\interact_sound.mp3').play()
+                interact_sound.play()
                 self.played = True
-            else:
-                self.played = False
+        else:
+            self.played = False
                 
     # optional, only for start button, put within event loop
     def navigate(self, destination):

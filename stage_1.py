@@ -8,3 +8,4 @@ class Stage:
     
     def run(self):
         print('running instance of stage')
+        
