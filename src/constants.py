@@ -4,13 +4,12 @@ import pygame
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-icon = pygame.image.load('assets\images\icon.png')
-game_caption = "Color Me You"
+GAME_TITLE = "Color Me You"
+GAME_ICON = pygame.image.load('assets\images\icon.png')
 
-cyan = (1, 176, 239)
-yellow = (255, 247, 1)
-magenta = (237, 0, 140)
-blue = (11, 41, 181)
-red = (169, 0, 46)
-green = (0, 173, 32)
-
+CYAN = (1, 176, 239)
+YELLOW = (255, 247, 1)
+MAGENTA = (237, 0, 140)
+BLUE = (11, 41, 181)
+RED = (169, 0, 46)
+GREEN = (0, 173, 32)
