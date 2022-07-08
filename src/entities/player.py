@@ -80,10 +80,10 @@ class Player:
             self.stand_count += 1
             self.walk_count = 0
         # number of standing idle frames * 3 frames each 3 * 7 - 1
-        if self.stand_count > 20:
+        if self.stand_count > 48:
             self.stand_count = 0
         # 3 frames * 4 total - 1
-        if self.walk_count > 11:
+        if self.walk_count > 27:
             self.walk_count = 0
 
     # determine what img to blit
@@ -91,11 +91,11 @@ class Player:
         self.screen = screen
         if self.idle == True:
             if self.face_direction == 0:
-                self.screen.blit(player_left_idle[self.stand_count // 3], self.position)
+                self.screen.blit(player_left_idle[self.stand_count // 7], self.position)
             if self.face_direction == 1:
-                self.screen.blit(player_right_idle[self.stand_count // 3], self.position)
+                self.screen.blit(player_right_idle[self.stand_count // 7], self.position)
         if self.idle == False:
             if self.face_direction == 0:
-                self.screen.blit(player_left_walk[self.walk_count // 3], self.position)
+                self.screen.blit(player_left_walk[self.walk_count // 7], self.position)
             if self.face_direction == 1:
-                self.screen.blit(player_right_walk[self.walk_count // 3], self.position)
+                self.screen.blit(player_right_walk[self.walk_count // 7], self.position)

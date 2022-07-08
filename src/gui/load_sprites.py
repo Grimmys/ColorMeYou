@@ -34,9 +34,9 @@ lit_buttons = SpriteSheet("assets/images/lit_buttons.png")
 player_right_idle = []
 player_right_idle_coords = []
 for i in range(0, 7):
-    player_right_idle_coords.append((i * 96, 0, i * 96 + 96, 480))
+    player_right_idle_coords.append((i * 96, 0, i * 96 + 96, 120))
 
-player_ss.load_strip(player_right_idle_coords, player_right_idle, 96, 480)
+player_ss.load_strip(player_right_idle_coords, player_right_idle, 96, 120)
 
 # right facing walk
 player_right_walk = []
@@ -44,15 +44,15 @@ player_right_walk_coords = []
 for i in range(0, 4):
     player_right_walk_coords.append((i * 96, 480, i * 96 + 96, 240))
 
-player_ss.load_strip(player_right_walk_coords, player_right_walk, 96, 480)
+player_ss.load_strip(player_right_walk_coords, player_right_walk, 96, 120)
 
 # right jump
 player_right_jump_rect = (0, 240, 96, 360)
-player_right_jump = player_ss.image_at(player_right_jump_rect, 96, 480)
+player_right_jump = player_ss.image_at(player_right_jump_rect, 96, 120)
 
 # right interact
 player_r_interact_rect = (96, 240, 192, 360)
-player_r_interact = player_ss.image_at(player_r_interact_rect, 96, 480)
+player_r_interact = player_ss.image_at(player_r_interact_rect, 96, 120)
 
 # ----------------------------------------------------------------
 
@@ -62,28 +62,28 @@ player_left_idle_coords = []
 for i in range(0, 7):
     player_left_idle_coords.append((i * 96, 360, i * 96 + 96, 480))
 
-player_ss.load_strip(player_left_idle_coords, player_left_idle, 96, 480)
+player_ss.load_strip(player_left_idle_coords, player_left_idle, 96, 120)
 
 # left facing walk
 player_left_walk = []
 player_left_walk_coords = []
 for i in range(0, 4):
     player_left_walk_coords.append((i * 96, 480, i * 96 + 96, 600))
-player_ss.load_strip(player_left_walk_coords, player_left_walk, 96, 480)
+player_ss.load_strip(player_left_walk_coords, player_left_walk, 96, 120)
 
 # left jump
 player_left_jump_rect = (96, 600, 192, 780)
-player_left_jump = player_ss.image_at(player_left_jump_rect, 96, 480)
+player_left_jump = player_ss.image_at(player_left_jump_rect, 96, 120)
 
 # left interact
 player_l_interact_rect = (0, 600, 96, 780)
-player_l_interact = player_ss.image_at(player_l_interact_rect, 96, 480)
+player_l_interact = player_ss.image_at(player_l_interact_rect, 96, 120)
 
 # ------------------------------------------------------
 
 # death
 player_death_rect = (0, 780, 96, 840)
-player_death = player_ss.image_at(player_death_rect, 96, 480)
+player_death = player_ss.image_at(player_death_rect, 96, 120)
 
 # ------------------------------------------------------
 
