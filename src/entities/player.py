@@ -8,11 +8,13 @@
 
 import pygame
 
-from src.gui.load_sprites import player_right_idle, player_right_walk, player_right_jump, player_left_idle, player_left_walk, player_left_jump
+from src.gui.load_sprites import player_right_idle, player_right_walk, player_left_idle, \
+    player_left_walk
 
 # don't forget character states with interact and death
 
 vec = pygame.math.Vector2
+
 
 class Player:
     def __init__(self, x_coord, y_coord, width, height):
@@ -32,6 +34,8 @@ class Player:
         # blit animation tracker
         self.walk_count = 0
         self.stand_count = 0
+
+        self.idle = False
 
     def update_position(self):
         # reset accel to 0
@@ -71,12 +75,12 @@ class Player:
     # if not colliding, then falling
     def draw(self, screen):
         self.screen = screen
-        if self.idle == True:
+        if self.idle:
             if self.face_direction == 0:
                 self.screen.blit(player_left_idle[self.stand_count // 7], self.position)
             if self.face_direction == 1:
                 self.screen.blit(player_right_idle[self.stand_count // 7], self.position)
-        if self.idle == False:
+        if not self.idle:
             if self.face_direction == 0:
                 self.screen.blit(player_left_walk[self.walk_count // 7], self.position)
             if self.face_direction == 1:

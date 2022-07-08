@@ -30,4 +30,5 @@ class Button:
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             page_instance = self.destination(self.screen)
             page_instance.run()
-            del page_instance
+            return page_instance
+        return None
