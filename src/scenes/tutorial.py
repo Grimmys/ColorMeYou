@@ -4,7 +4,7 @@ import pygame
 from src.scenes.scene import Scene
 from src.scenes.stage_1 import Stage
 
-controls_page = pygame.image.load("assets/images/controls_page.png")
+controls_page = pygame.image.load("assets/images/controls_page_esf.png")
 mechanics_page = pygame.image.load("assets/images/mechanics_page.png")
 
 

@@ -123,3 +123,13 @@ start_button_img = lit_buttons.image_at(start_button_rect, 568, 112)
 
 settings_button_rect = (0, 112, 568, 146)
 settings_button_img = lit_buttons.image_at(settings_button_rect, 568, 112)
+
+# backgrounds
+
+backgrounds = []
+
+cyan_bg = pygame.image.load("assets/images/c_mode_bg.png")
+magenta_bg = pygame.image.load("assets/images/y_mode_bg.png")
+yellow_bg = pygame.image.load("assets/images/y_mode_bg.png")
+
+backgrounds.append(cyan_bg, magenta_bg, yellow_bg)
