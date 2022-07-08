@@ -4,6 +4,8 @@ import pygame
 
 from src.entities.player import Player
 
+from src.gui.toggler import Toggler
+
 # load in three colored backgrounds
 # keep track of state stuff
 from src.scenes.scene import Scene
@@ -13,9 +15,9 @@ cyan_bg = pygame.image.load("assets/images/c_mode_bg.png")
 magenta_bg = pygame.image.load("assets/images/y_mode_bg.png")
 
 # start in bottom left corner of img
-bg_img_position = (-720, -780)
 
 player = Player(10, 10, 24, 30)
+toggler = Toggler()
 
 
 class Stage(Scene):
@@ -30,7 +32,7 @@ class Stage(Scene):
 
     def draw(self):
         super().draw()
-        self.screen.blit(yellow_bg, bg_img_position)
+        toggler.draw(self.screen) 
         player.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
@@ -51,3 +53,8 @@ class Stage(Scene):
                 player.states[1] = False
             if event.key == pygame.K_e:
                 player.states[2] = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4:
+                toggler.toggle_clockwise()
+            if event.button == 5:
+                toggler.toggle_counterclockwise()

@@ -6,6 +6,9 @@
 import pygame
 from src.gui.load_sprites import toggles, backgrounds
 
+BG_IMG_POSITION = (-720, -780)
+TOGGLER_POSITION = (15, 15)
+
 class Toggler:
     def __init__(self):
         self.state = 0
@@ -15,12 +18,16 @@ class Toggler:
             self.state += 1
         else:
             self.state = 0
+    
+    def toggle_counterclockwise(self):
+        if self.state != 0:
+            self.state -= 1
+        else:
+            self.state = 2    
 
-    def to_blit(self, screen, toggle_pos, bg_pos):
+    def draw(self, screen):
         self.screen = screen
-        self.toggle_pos = toggle_pos
-        self.bg_pos = bg_pos
-        self.screen.blit(backgrounds[self.state], self.bg_pos)
-        self.screen.blit(toggles[self.state], self.toggle_pos)
+        self.screen.blit(backgrounds[self.state], BG_IMG_POSITION)
+        self.screen.blit(toggles[self.state], TOGGLER_POSITION)
 
 # test blit ---------------------------------------

@@ -9,7 +9,7 @@
 import pygame
 
 from src.gui.load_sprites import player_right_idle, player_right_walk, player_left_idle, \
-    player_left_walk
+    player_left_walk, player_right_jump, player_left_jump
 
 # don't forget character states with interact and death
 
@@ -39,7 +39,7 @@ class Player:
 
     def update_position(self):
         # reset accel to 0
-        self.accel = vec(0, 0.6)
+        self.accel = vec(0, 0.2)
         if self.states[0]:
             self.accel.x = -self.ACCELERATION
         if self.states[1]:
@@ -64,10 +64,10 @@ class Player:
         if self.idle:
             self.stand_count += 1
             self.walk_count = 0
-        # number of standing idle frames * 3 frames each 3 * 7 - 1
+        # 7 * 7 - 1
         if self.stand_count > 48:
             self.stand_count = 0
-        # 3 frames * 4 total - 1
+        # 4 * 7 - 1
         if self.walk_count > 27:
             self.walk_count = 0
 
@@ -81,7 +81,14 @@ class Player:
             if self.face_direction == 1:
                 self.screen.blit(player_right_idle[self.stand_count // 7], self.position)
         if not self.idle:
-            if self.face_direction == 0:
-                self.screen.blit(player_left_walk[self.walk_count // 7], self.position)
-            if self.face_direction == 1:
-                self.screen.blit(player_right_walk[self.walk_count // 7], self.position)
+            if not self.states[2]:
+                if self.face_direction == 0:
+                    self.screen.blit(player_left_walk[self.walk_count // 7], self.position)
+                if self.face_direction == 1:
+                    self.screen.blit(player_right_walk[self.walk_count // 7], self.position)
+            if self.states[2]:
+                if self.face_direction == 0:
+                    self.screen.blit(player_left_jump, self.position)
+                if self.face_direction == 1:
+                    self.screen.blit(player_right_jump, self.position)
+
