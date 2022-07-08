@@ -42,7 +42,7 @@ player_ss.load_strip(player_right_idle_coords, player_right_idle, 96, 120)
 player_right_walk = []
 player_right_walk_coords = []
 for i in range(0, 4):
-    player_right_walk_coords.append((i * 96, 480, i * 96 + 96, 240))
+    player_right_walk_coords.append((i * 96, 120, i * 96 + 96, 240))
 
 player_ss.load_strip(player_right_walk_coords, player_right_walk, 96, 120)
 

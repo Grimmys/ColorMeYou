@@ -33,11 +33,31 @@ class Stage:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
-
-            player.key_state_listener()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_s:
+                        player.states[0] = True
+                        self.face_direction = 0
+                    if event.key == pygame.K_f:
+                        player.states[1] = True
+                        self.face_direction = 1
+                    if event.key == pygame.K_e:
+                        player.states[2] = True
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_s:
+                        player.states[0] = False
+                    if event.key == pygame.K_f:
+                        player.states[1] = False
+                    if event.key == pygame.K_e:
+                        player.states[2] = False
+            
+            print(player.states)       
+            player.update_position()
             player.walk_counter()
 
             self.screen.blit(yellow_bg, bg_img_position)
+            
             player.draw(self.screen)
             
             pygame.display.update()
+    
+    # def key_state_listener(self):

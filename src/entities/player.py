@@ -23,36 +23,17 @@ class Player:
         self.states = [False, False, False]
         self.face_direction = 1
 
-        self.position = vec((10, 10))
+        self.position = vec((10, 580))
         self.velocity = vec(0, 0)
         self.accel = vec(0, 0)
-        self.ACCELERATION = 0.5
+        self.ACCELERATION = 0.6
         self.FRICTION = -0.12
 
         # blit animation tracker
         self.walk_count = 0
         self.stand_count = 0
 
-    def key_state_listener(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_s:
-                    self.states[0] = True
-                    self.face_direction = 0
-                if event.key == pygame.K_f:
-                    self.states[1] = True
-                    self.face_direction = 1
-                if event.key == pygame.K_e:
-                    self.states[2] = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_s:
-                    self.states[0] = False
-                if event.key == pygame.K_f:
-                    self.states[1] = False
-                if event.key == pygame.K_e:
-                    self.states[2] = False
-
-    def move(self):
+    def update_position(self):
         # reset accel to 0
         self.accel = vec(0, 0)
         if self.states[0]:
@@ -87,6 +68,7 @@ class Player:
             self.walk_count = 0
 
     # determine what img to blit
+    # if not colliding, then falling
     def draw(self, screen):
         self.screen = screen
         if self.idle == True:
