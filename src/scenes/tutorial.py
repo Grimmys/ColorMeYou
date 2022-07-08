@@ -4,15 +4,15 @@ import pygame
 from src.scenes.scene import Scene
 from src.scenes.stage_1 import Stage
 
-controls_page = pygame.image.load("assets/images/controls_page_esf.png")
-mechanics_page = pygame.image.load("assets/images/mechanics_page.png")
+CONTROLS_PAGE_IMAGE = pygame.image.load("assets/images/controls_page_esf.png")
+MECHANICS_PAGE_IMAGE = pygame.image.load("assets/images/mechanics_page.png")
 
 
 class Tutorial(Scene):
     def __init__(self, screen):
         super().__init__(screen)
         self.click_count = 0
-        self.to_blit = controls_page
+        self.active_page = CONTROLS_PAGE_IMAGE
 
     def update(self):
         super().update()
@@ -22,9 +22,9 @@ class Tutorial(Scene):
 
     def draw(self):
         super().draw()
-        self.screen.blit(self.to_blit, (0, 0))
+        self.screen.blit(self.active_page, (0, 0))
 
     def process_event(self, event: pygame.event.Event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            self.to_blit = mechanics_page
+            self.active_page = MECHANICS_PAGE_IMAGE
             self.click_count += 1
