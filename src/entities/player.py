@@ -23,7 +23,7 @@ class Player:
         self.states = [False, False, False]
         self.face_direction = 1
 
-        self.position = vec((10, 580))
+        self.position = vec((10, 100))
         self.velocity = vec(0, 0)
         self.accel = vec(0, 0)
         self.ACCELERATION = 0.6
@@ -35,7 +35,7 @@ class Player:
 
     def update_position(self):
         # reset accel to 0
-        self.accel = vec(0, 0)
+        self.accel = vec(0, 0.6)
         if self.states[0]:
             self.accel.x = -self.ACCELERATION
         if self.states[1]:
