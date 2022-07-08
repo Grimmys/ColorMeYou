@@ -8,14 +8,17 @@
 
 import pygame
 
+from src.gui.load_sprites import player_right_idle, player_right_walk, player_right_jump, player_left_idle, player_left_walk, player_left_jump
+
+# don't forget character states with interact and death
+
 vec = pygame.math.Vector2
 
-
 class Player:
-    def __init__(self, x_coord, y_coord, width, y_len):
+    def __init__(self, x_coord, y_coord, width, height):
         self.x = int(x_coord)
         self.y = int(y_coord)
-        self.rect = pygame.Rect(x_coord, y_coord, width, y_len)
+        self.rect = pygame.Rect(x_coord, y_coord, width, height)
         # self states listens to keyboard inputs: left, right, up
         self.states = [False, False, False]
         self.face_direction = 1
@@ -35,8 +38,10 @@ class Player:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
                     self.states[0] = True
+                    self.face_direction = 0
                 if event.key == pygame.K_f:
                     self.states[1] = True
+                    self.face_direction = 1
                 if event.key == pygame.K_e:
                     self.states[2] = True
             if event.type == pygame.KEYUP:
@@ -84,3 +89,13 @@ class Player:
     # determine what img to blit
     def draw(self, screen):
         self.screen = screen
+        if self.idle == True:
+            if self.face_direction == 0:
+                self.screen.blit(player_left_idle[self.stand_count // 3], self.position)
+            if self.face_direction == 1:
+                self.screen.blit(player_right_idle[self.stand_count // 3], self.position)
+        if self.idle == False:
+            if self.face_direction == 0:
+                self.screen.blit(player_left_walk[self.walk_count // 3], self.position)
+            if self.face_direction == 1:
+                self.screen.blit(player_right_walk[self.walk_count // 3], self.position)

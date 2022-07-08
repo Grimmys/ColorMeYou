@@ -1,7 +1,9 @@
-# stage 1, or just dummy page to test main menu
+# stage 1
 
 import pygame
 import sys
+
+from src.entities.player import Player
 
 # load in three colored backgrounds
 # keep track of state stuff
@@ -13,6 +15,7 @@ magenta_bg = pygame.image.load("assets/images/y_mode_bg.png")
 # start in bottom left corner of img
 bg_img_position = (-720, -780)
 
+player = Player(10, 10, 24, 30)
 
 class Stage:
     def __init__(self, screen):
@@ -31,5 +34,10 @@ class Stage:
                     if event.key == pygame.K_q:
                         sys.exit()
 
+            player.key_state_listener()
+            player.walk_counter()
+
             self.screen.blit(yellow_bg, bg_img_position)
+            player.draw(self.screen)
+            
             pygame.display.update()

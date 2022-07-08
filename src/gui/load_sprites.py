@@ -26,64 +26,64 @@ class SpriteSheet:
 
 
 # load in
-mc_ss = SpriteSheet("assets/images/mc_ss.png")
+player_ss = SpriteSheet("assets/images/mc_ss.png")
 misc_ss = SpriteSheet("assets/images/misc_ss.png")
 lit_buttons = SpriteSheet("assets/images/lit_buttons.png")
 
 # right facing idle
-mc_right_idle = []
-mc_right_idle_coords = []
+player_right_idle = []
+player_right_idle_coords = []
 for i in range(0, 7):
-    mc_right_idle_coords.append((i * 96, 0, i * 96 + 96, 480))
+    player_right_idle_coords.append((i * 96, 0, i * 96 + 96, 480))
 
-mc_ss.load_strip(mc_right_idle_coords, mc_right_idle, 96, 480)
+player_ss.load_strip(player_right_idle_coords, player_right_idle, 96, 480)
 
 # right facing walk
-mc_right_walk = []
-mc_right_walk_coords = []
+player_right_walk = []
+player_right_walk_coords = []
 for i in range(0, 4):
-    mc_right_walk_coords.append((i * 96, 480, i * 96 + 96, 240))
+    player_right_walk_coords.append((i * 96, 480, i * 96 + 96, 240))
 
-mc_ss.load_strip(mc_right_walk_coords, mc_right_walk, 96, 480)
+player_ss.load_strip(player_right_walk_coords, player_right_walk, 96, 480)
 
 # right jump
-mc_right_jump_rect = (0, 240, 96, 360)
-mc_right_jump = mc_ss.image_at(mc_right_jump_rect, 96, 480)
+player_right_jump_rect = (0, 240, 96, 360)
+player_right_jump = player_ss.image_at(player_right_jump_rect, 96, 480)
 
 # right interact
-mc_r_interact_rect = (96, 240, 192, 360)
-mc_r_interact = mc_ss.image_at(mc_r_interact_rect, 96, 480)
+player_r_interact_rect = (96, 240, 192, 360)
+player_r_interact = player_ss.image_at(player_r_interact_rect, 96, 480)
 
 # ----------------------------------------------------------------
 
 # left idle
-mc_left_idle = []
-mc_left_idle_coords = []
+player_left_idle = []
+player_left_idle_coords = []
 for i in range(0, 7):
-    mc_left_idle_coords.append((i * 96, 360, i * 96 + 96, 480))
+    player_left_idle_coords.append((i * 96, 360, i * 96 + 96, 480))
 
-mc_ss.load_strip(mc_left_idle_coords, mc_left_idle, 96, 480)
+player_ss.load_strip(player_left_idle_coords, player_left_idle, 96, 480)
 
 # left facing walk
-mc_left_walk = []
-mc_left_walk_coords = []
+player_left_walk = []
+player_left_walk_coords = []
 for i in range(0, 4):
-    mc_left_walk_coords.append((i * 96, 480, i * 96 + 96, 600))
-mc_ss.load_strip(mc_left_walk_coords, mc_left_walk, 96, 480)
+    player_left_walk_coords.append((i * 96, 480, i * 96 + 96, 600))
+player_ss.load_strip(player_left_walk_coords, player_left_walk, 96, 480)
 
 # left jump
-mc_lj_rect = (96, 600, 192, 780)
-mc_lj = mc_ss.image_at(mc_lj_rect, 96, 480)
+player_left_jump_rect = (96, 600, 192, 780)
+player_left_jump = player_ss.image_at(player_left_jump_rect, 96, 480)
 
 # left interact
-mc_l_interact_rect = (0, 600, 96, 780)
-mc_l_interact = mc_ss.image_at(mc_l_interact_rect, 96, 480)
+player_l_interact_rect = (0, 600, 96, 780)
+player_l_interact = player_ss.image_at(player_l_interact_rect, 96, 480)
 
 # ------------------------------------------------------
 
 # death
-mc_death_rect = (0, 780, 96, 840)
-mc_death = mc_ss.image_at(mc_death_rect, 96, 480)
+player_death_rect = (0, 780, 96, 840)
+player_death = player_ss.image_at(player_death_rect, 96, 480)
 
 # ------------------------------------------------------
 
