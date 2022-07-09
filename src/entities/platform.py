@@ -13,6 +13,8 @@
 
 import pygame
 
+from src.constants import CYAN
+
 
 class Platform:
     def __init__(self, color, x_coord, y_coord, width, height, state):
@@ -20,3 +22,7 @@ class Platform:
         self.position = (x_coord, y_coord)
         self.rect = pygame.Rect(x_coord, y_coord, width, height)
         self.state = state
+
+    def draw(self, screen):
+        self.screen = screen
+        pygame.draw.rect(self.screen, CYAN, self.rect)

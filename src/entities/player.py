@@ -15,7 +15,7 @@ from src.entities.platform import Platform
 
 from src.constants import CYAN, MAGENTA, YELLOW
 
-platform = Platform(CYAN, 200, 200, 50, 100, True)
+platform = Platform(CYAN, 0, 500, 1280, 40, True)
 
 # don't forget character states with interact and death
 
@@ -42,14 +42,33 @@ class Player:
         self.stand_count = 0
 
         self.idle = False
+        self.collide = True
+    
+    # iterate through list of platforms within certain radius of player rect
+    # for collision detection (another rect? an invisible one...)
+    # list is mutable, take out platforms not relevant to current mode
+
+    def detect_collision(self):
+        self.rect = pygame.Rect(self.position[0], self.position[1], 96, 120)
+        self.collide = pygame.Rect.colliderect(self.rect, platform.rect)
+        if self.velocity.y > 0:
+            if self.collide:
+                if self.position.y < platform.rect.bottom: 
+                    self.position.y = platform.rect.top - 121
+                    self.velocity.y = 0
 
     def update_position(self):
         # reset accel to 0
-        self.accel = vec(0, 0)
+        self.accel = vec(0, 0.6)
         if self.states[0]:
             self.accel.x = -self.ACCELERATION
         elif self.states[1]:
             self.accel.x = self.ACCELERATION
+        if self.states[2] and self.collide:
+            self.velocity.y = -16
+        if not self.states[2] and not self.collide:
+            if self.velocity.y < -5:
+                self.velocity.y = -5
 
         self.accel.x += self.velocity.x * self.FRICTION
         self.velocity += self.accel
@@ -84,6 +103,7 @@ class Player:
     # if not colliding, then falling
     def draw(self, screen):
         self.screen = screen
+        platform.draw(self.screen)
         if self.idle:
             if self.face_direction == 0:
                 self.screen.blit(player_left_idle[self.stand_count // 7], self.position)
@@ -101,4 +121,3 @@ class Player:
                     self.screen.blit(player_left_jump, self.position)
                 if self.face_direction == 1:
                     self.screen.blit(player_right_jump, self.position)
-

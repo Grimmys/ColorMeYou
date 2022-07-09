@@ -25,9 +25,10 @@ class Stage(Scene):
 
     def update(self):
         super().update()
-        print(self.player.states)
+        print(self.player.states, self.player.rect)
         self.player.update_position()
         self.player.walk_counter()
+        self.player.detect_collision()
 
     def draw(self):
         super().draw()
