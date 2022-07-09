@@ -6,6 +6,11 @@
 import pygame
 from src.gui.load_sprites import toggles, backgrounds
 
+from typing import Sequence
+from src.entities.platform import Platform
+
+from src.constants import CYAN_MODE, MAGENTA_MODE, YELLOW_MODE
+
 BG_IMG_POSITION = (-720, -780)
 TOGGLER_POSITION = (15, 15)
 
@@ -23,11 +28,27 @@ class Toggler:
         if self.state != 0:
             self.state -= 1
         else:
-            self.state = 2    
+            self.state = 2   
+
+    def toggle_platforms(self, platforms: Sequence[Platform]):
+        for platform in platforms:
+            if self.state == 0:
+                if platform.color not in CYAN_MODE:
+                    platform.state = False
+                else:
+                    platform.state = True
+            elif self.state == 1:
+                if platform.color not in MAGENTA_MODE:
+                    platform.state = False
+                else:
+                    platform.state = True
+            elif self.state == 2:
+                if platform.color not in YELLOW_MODE:
+                    platform.state = False
+                else:
+                    platform.state = True
 
     def draw(self, screen):
         self.screen = screen
         self.screen.blit(backgrounds[self.state], BG_IMG_POSITION)
         self.screen.blit(toggles[self.state], TOGGLER_POSITION)
-
-# test blit ---------------------------------------

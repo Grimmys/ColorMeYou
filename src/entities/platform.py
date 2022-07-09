@@ -23,4 +23,12 @@ class Platform(Entity):
         self.state = state
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+        self.surface = pygame.Surface((self.rect.width, self.rect.height))
+        self.surface.fill(self.color)
+        if self.state == False:
+            self.surface.set_alpha(100)
+        else:
+            self.surface.set_alpha(255)
+        screen.blit(self.surface, (self.rect[0], self.rect[1]))
+            
+# make entire list of platforms

@@ -2,7 +2,8 @@
 
 import pygame
 
-from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, CYAN
+from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, \
+    CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
 from src.entities.platform import Platform
 from src.entities.player import Player
 
@@ -12,26 +13,21 @@ from src.gui.toggler import Toggler
 # keep track of state stuff
 from src.scenes.scene import Scene
 
-yellow_bg = pygame.image.load("assets/images/y_mode_bg.png")
-cyan_bg = pygame.image.load("assets/images/c_mode_bg.png")
-magenta_bg = pygame.image.load("assets/images/y_mode_bg.png")
-
-# start in bottom left corner of img
-
 
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = [Platform(CYAN, 0, 500, 1000, 40, True)]
-        self.player = Player(10, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
+        self.platforms = [Platform(CYAN, 300, 500, 800, 40, True), Platform(CYAN, 400, 300, 800, 40, True)]
+        self.player = Player(400, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
 
     def update(self):
         super().update()
-        print(self.player.states, self.player.rect)
         self.player.update_position()
         self.player.walk_counter()
         self.player.detect_collision(self.platforms)
+        self.toggler.toggle_platforms(self.platforms)
+        print(self.player.states, self.player.rect)
 
     def draw(self):
         super().draw()

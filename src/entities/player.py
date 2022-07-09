@@ -24,6 +24,7 @@ class Player(Entity):
     def __init__(self, x_coord, y_coord, width, height):
         super().__init__(x_coord, y_coord, width, height)
         # self states listens to keyboard inputs: left, right, up
+        
         self.states = [False, False, False]
         self.face_direction = 1
 
@@ -53,13 +54,15 @@ class Player(Entity):
 
     def update_position(self):
         # reset accel to 0
-        self.accel = vec(0, 0.6)
+        self.accel = vec(0, 0.8)
         if self.states[0]:
             self.accel.x = - ACCELERATION
+            self.velocity.x -= 1.3
         elif self.states[1]:
             self.accel.x = ACCELERATION
+            self.velocity.x += 1.3
         if self.states[2] and self.is_on_ground:
-            self.velocity.y = -16
+            self.velocity.y = -19
             self.is_on_ground = False
         if not self.states[2] and not self.is_on_ground:
             if self.velocity.y < -5:
