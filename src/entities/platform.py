@@ -13,16 +13,14 @@
 
 import pygame
 
-from src.constants import CYAN
+from src.entities.entity import Entity
 
 
-class Platform:
+class Platform(Entity):
     def __init__(self, color, x_coord, y_coord, width, height, state):
+        super().__init__(x_coord, y_coord, width, height)
         self.color = color
-        self.position = (x_coord, y_coord)
-        self.rect = pygame.Rect(x_coord, y_coord, width, height)
         self.state = state
 
     def draw(self, screen):
-        self.screen = screen
-        pygame.draw.rect(self.screen, CYAN, self.rect)
+        pygame.draw.rect(screen, self.color, self.rect)

@@ -2,6 +2,8 @@
 
 import pygame
 
+from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, CYAN
+from src.entities.platform import Platform
 from src.entities.player import Player
 
 from src.gui.toggler import Toggler
@@ -20,7 +22,8 @@ magenta_bg = pygame.image.load("assets/images/y_mode_bg.png")
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.player = Player(10, 10, 24, 30)
+        self.platforms = [Platform(CYAN, 0, 500, 1000, 40, True)]
+        self.player = Player(10, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
 
     def update(self):
@@ -28,11 +31,13 @@ class Stage(Scene):
         print(self.player.states, self.player.rect)
         self.player.update_position()
         self.player.walk_counter()
-        self.player.detect_collision()
+        self.player.detect_collision(self.platforms)
 
     def draw(self):
         super().draw()
         self.toggler.draw(self.screen)
+        for platform in self.platforms:
+            platform.draw(self.screen)
         self.player.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
@@ -40,10 +45,8 @@ class Stage(Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 self.player.states[0] = True
-                self.face_direction = 0
             if event.key == pygame.K_f:
                 self.player.states[1] = True
-                self.face_direction = 1
             if event.key == pygame.K_e:
                 self.player.states[2] = True
         if event.type == pygame.KEYUP:
