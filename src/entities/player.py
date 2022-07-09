@@ -82,7 +82,7 @@ class Player(Entity):
         if not self.idle:
             self.walk_count += 1
             self.stand_count = 0
-        if self.idle:<
+        if self.idle:
             self.stand_count += 1
             self.walk_count = 0
         # 7 * 7 - 1
