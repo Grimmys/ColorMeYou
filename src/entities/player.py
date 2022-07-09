@@ -11,6 +11,12 @@ import pygame
 from src.gui.load_sprites import player_right_idle, player_right_walk, player_left_idle, \
     player_left_walk, player_right_jump, player_left_jump
 
+from src.entities.platform import Platform
+
+from src.constants import CYAN, MAGENTA, YELLOW
+
+platform = Platform(CYAN, 200, 200, 50, 100, True)
+
 # don't forget character states with interact and death
 
 vec = pygame.math.Vector2
@@ -39,10 +45,10 @@ class Player:
 
     def update_position(self):
         # reset accel to 0
-        self.accel = vec(0, 0.2)
+        self.accel = vec(0, 0)
         if self.states[0]:
             self.accel.x = -self.ACCELERATION
-        if self.states[1]:
+        elif self.states[1]:
             self.accel.x = self.ACCELERATION
 
         self.accel.x += self.velocity.x * self.FRICTION
@@ -56,7 +62,10 @@ class Player:
             self.idle = True
         elif True in self.states:
             self.idle = False
-            self.face_direction = self.states.index(True)
+            if self.states.index(True) == 2:
+                pass
+            else:
+                self.face_direction = self.states.index(True)
 
         if not self.idle:
             self.walk_count += 1
@@ -78,9 +87,10 @@ class Player:
         if self.idle:
             if self.face_direction == 0:
                 self.screen.blit(player_left_idle[self.stand_count // 7], self.position)
-            if self.face_direction == 1:
+            elif self.face_direction == 1:
                 self.screen.blit(player_right_idle[self.stand_count // 7], self.position)
         if not self.idle:
+            # if moving left, right, or jumping
             if not self.states[2]:
                 if self.face_direction == 0:
                     self.screen.blit(player_left_walk[self.walk_count // 7], self.position)

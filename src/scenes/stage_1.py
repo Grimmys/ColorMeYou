@@ -26,7 +26,7 @@ class Stage(Scene):
 
     def update(self):
         super().update()
-        print(player.states)
+        print(player.states, player.face_direction)
         player.update_position()
         player.walk_counter()
 
@@ -40,16 +40,16 @@ class Stage(Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 player.states[0] = True
-                self.face_direction = 0
-            if event.key == pygame.K_f:
+                player.face_direction = 0
+            elif event.key == pygame.K_f:
                 player.states[1] = True
-                self.face_direction = 1
+                player.face_direction = 1
             if event.key == pygame.K_e:
                 player.states[2] = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_s:
                 player.states[0] = False
-            if event.key == pygame.K_f:
+            elif event.key == pygame.K_f:
                 player.states[1] = False
             if event.key == pygame.K_e:
                 player.states[2] = False
