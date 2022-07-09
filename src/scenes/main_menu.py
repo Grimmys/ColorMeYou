@@ -8,9 +8,10 @@ import pygame
 from src.gui.button import Button
 from src.gui.load_sprites import start_button_img, settings_button_img
 from src.scenes.scene import Scene
+from src.scenes.settings import Settings
 from src.scenes.tutorial import Tutorial
 
-background = pygame.image.load("assets/images/mm.png")
+MAIN_MENU_BACKGROUND = pygame.image.load("assets/images/mm.png")
 
 
 class MainMenu(Scene):
@@ -27,7 +28,7 @@ class MainMenu(Scene):
 
     def draw(self):
         super().draw()
-        self.screen.blit(background, (0, 0))
+        self.screen.blit(MAIN_MENU_BACKGROUND, (0, 0))
         self.start_button.detect_hover()
         self.settings_button.detect_hover()
 
@@ -35,3 +36,5 @@ class MainMenu(Scene):
         super().process_event(event)
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.next_scene = self.start_button.navigate(Tutorial)
+            if self.next_scene is None:
+                self.next_scene = self.settings_button.navigate(Settings)
