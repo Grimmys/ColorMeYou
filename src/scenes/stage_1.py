@@ -12,12 +12,13 @@ from src.gui.toggler import Toggler
 # load in three colored backgrounds
 # keep track of state stuff
 from src.scenes.scene import Scene
+from src.entities.platform import Platform, platforms
 
 
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = [Platform(CYAN, 300, 500, 800, 40, True), Platform(CYAN, 400, 300, 800, 40, True)]
+        self.platforms = platforms
         self.player = Player(400, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
 

@@ -14,6 +14,25 @@
 import pygame
 
 from src.entities.entity import Entity
+from src.entities.camera import Camera
+
+from src.constants import CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
+
+camera = Camera()
+
+# all platforms ever
+platforms = []
+
+drawn_platforms = platforms
+# only platforms within camera view
+for platform in drawn_platforms:
+    if not pygame.Rect.colliderect(platform.rect, camera.rect):
+        drawn_platforms.remove(platform)
+# only currently active platforms for collision detection
+working_platforms = platforms
+for platform in working_platforms:
+    if platform.state == False:
+        working_platforms.remove(platform)
 
 
 class Platform(Entity):
@@ -21,6 +40,7 @@ class Platform(Entity):
         super().__init__(x_coord, y_coord, width, height)
         self.color = color
         self.state = state
+        platforms.append(self)
 
     def draw(self, screen):
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
@@ -31,4 +51,5 @@ class Platform(Entity):
             self.surface.set_alpha(255)
         screen.blit(self.surface, (self.rect[0], self.rect[1]))
             
-# make entire list of platforms
+P1 = Platform(BLACK, 0, 600, 1280, 40, True)
+P2 = Platform(CYAN, 100, 500, 200, 40, True)
