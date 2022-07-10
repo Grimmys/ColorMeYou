@@ -135,3 +135,13 @@ yellow_bg = pygame.image.load("assets/images/y_mode_bg.png")
 backgrounds.append(cyan_bg)
 backgrounds.append(magenta_bg)
 backgrounds.append(yellow_bg)
+
+# endscreens
+
+endscreens = []
+
+no_egg_bg = pygame.image.load("assets/images/win_screen_1.png")
+egg_bg = pygame.image.load("assets/images/win_screen_2.png")
+
+endscreens.append(no_egg_bg)
+endscreens.append(egg_bg)

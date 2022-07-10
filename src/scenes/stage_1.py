@@ -13,7 +13,7 @@ from src.gui.toggler import Toggler
 # keep track of state stuff
 from src.scenes.scene import Scene
 from src.entities.platform import Platform, all_platforms
-from src.entities.level_platforms import PlatformSet
+from src.entities.platform_set import PlatformSet
 from src.entities.cartridge import Cartridge
 
 
@@ -30,13 +30,14 @@ class Stage(Scene):
 
     def update(self):
         super().update()
+        # update player
         self.player.update_position()
         self.player.walk_counter()
         self.player.detect_collision(self.platform_set.working_platforms)
-        
+        # update platforms
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
         self.platform_set.update_platforms()
-
+        # update objectives
         self.cyan_cartridge.detect_collision(self.player)
         self.magenta_cartridge.detect_collision(self.player)
         self.yellow_cartridge.detect_collision(self.player)

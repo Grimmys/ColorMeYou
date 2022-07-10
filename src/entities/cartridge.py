@@ -4,8 +4,10 @@ import pygame
 from src.entities.entity import Entity
 from src.gui.load_sprites import cartridges
 from src.constants import CYAN, MAGENTA, YELLOW, INTERACT_SOUND
-
 # C - 0, M - 1, Y - 2
+
+cartridge_set = []
+
 class Cartridge(Entity):
     def __init__(self, color, x_coord, y_coord, width, height):
         super().__init__(x_coord, y_coord, width, height)
@@ -21,7 +23,6 @@ class Cartridge(Entity):
             if self.indicator and not self.played:
                 INTERACT_SOUND.play()
                 self.played = True
-
     
     def draw(self, screen):
         if self.state:
