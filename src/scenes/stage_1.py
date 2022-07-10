@@ -13,6 +13,7 @@ from src.gui.toggler import Toggler
 # keep track of state stuff
 from src.scenes.scene import Scene
 from src.entities.platform import Platform, platforms
+from src.entities.level_platforms import PlatformSet
 
 
 class Stage(Scene):
@@ -21,14 +22,16 @@ class Stage(Scene):
         self.platforms = platforms
         self.player = Player(400, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
+        self.platform_set = PlatformSet()
 
     def update(self):
         super().update()
         self.player.update_position()
         self.player.walk_counter()
-        self.player.detect_collision(self.platforms)
-        self.toggler.toggle_platforms(self.platforms)
-        print(self.player.states, self.player.rect)
+        self.player.detect_collision(self.platform_set.working_platforms)
+        self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
+        self.platform_set.update_platforms()
+        print(len(self.platforms), len(self.platform_set.working_platforms), len(self.platform_set.drawn_platforms))
 
     def draw(self):
         super().draw()
