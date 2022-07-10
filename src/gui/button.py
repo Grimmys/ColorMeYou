@@ -5,9 +5,7 @@ import pygame
 
 # could probably move this into constants since we will have an interact sound later
 from src.scenes.scene import Scene
-
-interact_sound = pygame.mixer.Sound("assets/sounds/interact_sound.mp3")
-interact_sound.set_volume(0.4)
+from src.constants import INTERACT_SOUND
 
 
 class Button:
@@ -22,7 +20,7 @@ class Button:
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.image, self.position)
             if not self.played:
-                interact_sound.play()
+                INTERACT_SOUND.play()
                 self.played = True
         else:
             self.played = False

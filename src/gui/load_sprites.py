@@ -114,8 +114,8 @@ misc_ss.load_strip(enemy_coords, enemy, 480, 80)
 cartridges = []
 cartridge_coords = []
 for i in range(0, 3):
-    cartridge_coords.append((i * 23, 212 + 96 + 80, i * 23 + 23, 212 + 96 + 80 + 21))
-misc_ss.load_strip(cartridge_coords, cartridges, 23, 21)
+    cartridge_coords.append((i * 92, 212 + 96 + 80, i * 92 + 92, 212 + 96 + 80 + 84))
+misc_ss.load_strip(cartridge_coords, cartridges, 92, 84)
 
 # main menu buttons
 start_button_rect = (0, 0, 568, 112)

@@ -1,11 +1,15 @@
 # constant things not game state lol
 import pygame
+pygame.init()
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
 GAME_TITLE = "Color Me You"
 GAME_ICON = pygame.image.load('assets\images\icon.png')
+
+INTERACT_SOUND = pygame.mixer.Sound("assets/sounds/interact_sound.mp3")
+INTERACT_SOUND.set_volume(0.4)
 
 CYAN = (1, 176, 239)
 YELLOW = (255, 247, 1)
