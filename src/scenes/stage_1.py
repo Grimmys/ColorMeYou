@@ -12,14 +12,14 @@ from src.gui.toggler import Toggler
 # load in three colored backgrounds
 # keep track of state stuff
 from src.scenes.scene import Scene
-from src.entities.platform import Platform, platforms
+from src.entities.platform import Platform, all_platforms
 from src.entities.level_platforms import PlatformSet
 
 
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = platforms
+        self.all_platforms = all_platforms
         self.player = Player(400, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
@@ -31,7 +31,7 @@ class Stage(Scene):
         self.player.detect_collision(self.platform_set.working_platforms)
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
         self.platform_set.update_platforms()
-        print(len(self.platforms), len(self.platform_set.working_platforms), \
+        print(len(self.all_platforms), len(self.platform_set.working_platforms), \
             len(self.platform_set.drawn_platforms))
 
     def draw(self):

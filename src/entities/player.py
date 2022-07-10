@@ -52,16 +52,15 @@ class Player(Entity):
                     return
                 # horizontal collision detection
                 if self.face_direction == 1:
-                    if self.rect.right > platform.rect.left:
-                        # self.rect.right = platform.rect.left
+                    if self.rect.centery > platform.rect.left:
+                        self.rect.right = platform.rect.left
                         self.velocity.x = 0
                         self.wall_collide = True
                         return
                 if self.face_direction == 0:
-                    if self.rect.left < platform.rect.right:
-                        # self.rect.left = platform.rect.right
+                    if self.rect.centery < platform.rect.right:
+                        self.rect.left = platform.rect.right
                         self.velocity.x = 0
-                        self.accel.x = 0
                         self.wall_collide = True
                         return
 

@@ -15,14 +15,14 @@ import pygame
 
 from src.entities.entity import Entity
 
-platforms = []
+all_platforms = []
 
 class Platform(Entity):
     def __init__(self, color, x_coord, y_coord, width, height, state):
         super().__init__(x_coord, y_coord, width, height)
         self.color = color
         self.state = state
-        platforms.append(self)
+        all_platforms.append(self)
 
     def draw(self, screen):
         self.surface = pygame.Surface((self.rect.width, self.rect.height))

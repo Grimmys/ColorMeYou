@@ -4,7 +4,7 @@
 # turn off collision for blocks 
 import pygame
 from src.entities.camera import Camera
-from src.entities.platform import Platform, platforms
+from src.entities.platform import Platform, all_platforms
 
 from src.constants import CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
 
@@ -18,7 +18,7 @@ class PlatformSet:
         self.working_platforms = []
 
     def update_platforms(self):
-        for platform in platforms:
+        for platform in all_platforms:
             if platform not in self.drawn_platforms:
                 if pygame.Rect.colliderect(platform.rect, camera.rect):
                     self.drawn_platforms.append(platform)
