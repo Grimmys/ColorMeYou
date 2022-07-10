@@ -20,7 +20,7 @@ class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
         self.all_platforms = all_platforms
-        self.player = Player(400, 10, PLAYER_WIDTH, PLAYER_HEIGHT)
+        self.player = Player(100, 100, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
 

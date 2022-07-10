@@ -36,8 +36,12 @@ class PlatformSet:
                     self.working_platforms.remove(platform)
         
 
-P1 = Platform(BLACK, 0, 600, 1280, 40, True)
-P2 = Platform(CYAN, 100, 500, 200, 40, True)
-P3 = Platform(MAGENTA, 200, 400, 200, 40, True)
-P4 = Platform(YELLOW, 300, 300, 200, 40, True)
-P5 = Platform(RED, 600, 200, 200, 500, True)
+P1 = Platform(BLACK, 0, 540, 300, 300, True)
+# P2 = Platform(CYAN, 400, 440, 200, 40, True)
+P3 = Platform(MAGENTA, 700, 340, 200, 40, False)
+P4 = Platform(YELLOW, 1000, 240, 200, 40, False)
+P5 = Platform(GREEN, 1300, 140, 200, 40, True)
+P6 = Platform(BLUE, 1500, 200, 40, 400, True)
+P7 = Platform(BLACK, 1800, 100, 600, 700, True)
+
+test_plat = Platform(BLUE, 300, 200, 40, 500, True)
