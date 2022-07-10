@@ -37,13 +37,12 @@ class Player(Entity):
 
         self.idle = False
         self.is_on_ground = False
-    
-    # iterate through list of platforms within certain radius of player rect
-    # for collision detection (another rect? an invisible one...)
-    # list is mutable, take out platforms not relevant to current mode
+        self.wall_collide = False
+
 
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
+        self.wall_collide = False
         for platform in platforms:
             if pygame.Rect.colliderect(self.rect, platform.rect):
                 if self.rect.centery < platform.rect.top:
@@ -51,16 +50,31 @@ class Player(Entity):
                     self.velocity.y = 0
                     self.is_on_ground = True
                     return
+                # horizontal collision detection
+                if self.face_direction == 1:
+                    if self.rect.right > platform.rect.left:
+                        # self.rect.right = platform.rect.left
+                        self.velocity.x = 0
+                        self.wall_collide = True
+                        return
+                if self.face_direction == 0:
+                    if self.rect.left < platform.rect.right:
+                        # self.rect.left = platform.rect.right
+                        self.velocity.x = 0
+                        self.accel.x = 0
+                        self.wall_collide = True
+                        return
 
     def update_position(self):
         # reset accel to 0
         self.accel = vec(0, 0.8)
-        if self.states[0]:
-            self.accel.x = - ACCELERATION
-            self.velocity.x -= 1.3
-        elif self.states[1]:
-            self.accel.x = ACCELERATION
-            self.velocity.x += 1.3
+        if not self.wall_collide:
+            if self.states[0]:
+                self.accel.x = - ACCELERATION
+                self.velocity.x -= 1.3
+            elif self.states[1]:
+                self.accel.x = ACCELERATION
+                self.velocity.x += 1.3
         if self.states[2] and self.is_on_ground:
             self.velocity.y = -19
             self.is_on_ground = False
