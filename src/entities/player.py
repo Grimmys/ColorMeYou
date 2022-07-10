@@ -45,6 +45,7 @@ class Player(Entity):
         self.wall_collide = False
         for platform in platforms:
             if pygame.Rect.colliderect(self.rect, platform.rect):
+                # vertical collision detection
                 if self.rect.centery < platform.rect.top:
                     self.rect.y = platform.rect.top - self.rect.height
                     self.velocity.y = 0
@@ -52,17 +53,33 @@ class Player(Entity):
                     return
                 # horizontal collision detection
                 if self.face_direction == 1:
-                    if self.rect.centery > platform.rect.left:
-                        self.rect.right = platform.rect.left
-                        self.velocity.x = 0
-                        self.wall_collide = True
-                        return
+                    # platform pieces
+                    if platform.rect.width > platform.rect.height:
+                        if self.rect.centery > platform.rect.left:
+                            self.rect.right = platform.rect.left
+                            self.velocity.x = 0
+                            self.wall_collide = True
+                            return
+                    # wall pieces
+                    elif platform.rect.width < platform.rect.height:
+                        if self.rect.right > platform.rect.left:
+                            self.rect.right = platform.rect.left
+                            self.velocity.x = 0
+                            self.wall_collide = True
+                            return
                 if self.face_direction == 0:
-                    if self.rect.centery < platform.rect.right:
-                        self.rect.left = platform.rect.right
-                        self.velocity.x = 0
-                        self.wall_collide = True
-                        return
+                    if platform.rect.width > platform.rect.height:
+                        if self.rect.centery < platform.rect.right:
+                            self.rect.left = platform.rect.right
+                            self.velocity.x = 0
+                            self.wall_collide = True
+                            return
+                    elif platform.rect.width < platform.rect.height:
+                        if self.rect.left < platform.rect.right:
+                            self.rect.left = platform.rect.right
+                            self.velocity.x = 0
+                            self.wall_collide = True
+                            return                        
 
     def update_position(self):
         # reset accel to 0

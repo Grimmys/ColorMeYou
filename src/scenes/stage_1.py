@@ -31,8 +31,7 @@ class Stage(Scene):
         self.player.detect_collision(self.platform_set.working_platforms)
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
         self.platform_set.update_platforms()
-        print(len(self.all_platforms), len(self.platform_set.working_platforms), \
-            len(self.platform_set.drawn_platforms))
+        print(self.player.rect.width)
 
     def draw(self):
         super().draw()

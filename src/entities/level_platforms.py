@@ -37,7 +37,7 @@ class PlatformSet:
         
 
 P1 = Platform(BLACK, 0, 540, 300, 300, True)
-# P2 = Platform(CYAN, 400, 440, 200, 40, True)
+P2 = Platform(CYAN, 400, 440, 200, 40, True)
 P3 = Platform(MAGENTA, 700, 340, 200, 40, False)
 P4 = Platform(YELLOW, 1000, 240, 200, 40, False)
 P5 = Platform(GREEN, 1300, 140, 200, 40, True)
