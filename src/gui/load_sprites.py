@@ -145,3 +145,10 @@ egg_bg = pygame.image.load("assets/images/win_screen_2.png")
 
 endscreens.append(no_egg_bg)
 endscreens.append(egg_bg)
+
+lvl_win = []
+lvl_win_1 = pygame.image.load("assets/images/lvl_win1.png")
+lvl_win_2 = pygame.image.load("assets/images/lvl_win2.png")
+
+lvl_win.append(lvl_win_1)
+lvl_win.append(lvl_win_2)

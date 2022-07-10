@@ -15,6 +15,7 @@ from src.scenes.scene import Scene
 from src.entities.platform import Platform, all_platforms
 from src.entities.platform_set import PlatformSet
 from src.entities.cartridge import Cartridge
+from src.entities.paper import Paper
 
 
 class Stage(Scene):
@@ -27,6 +28,7 @@ class Stage(Scene):
         self.cyan_cartridge = Cartridge(0, 400, 340, 92, 84)
         self.magenta_cartridge = Cartridge(1, 600, 240, 92, 84)
         self.yellow_cartridge = Cartridge(2, 800, 140, 92, 84)
+        self.paper = Paper(500, 500, 80, 96, True)
 
     def update(self):
         super().update()
