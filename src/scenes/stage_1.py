@@ -31,12 +31,13 @@ class Stage(Scene):
         self.player.detect_collision(self.platform_set.working_platforms)
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
         self.platform_set.update_platforms()
-        print(len(self.platforms), len(self.platform_set.working_platforms), len(self.platform_set.drawn_platforms))
+        print(len(self.platforms), len(self.platform_set.working_platforms), \
+            len(self.platform_set.drawn_platforms))
 
     def draw(self):
         super().draw()
         self.toggler.draw(self.screen)
-        for platform in self.platforms:
+        for platform in self.platform_set.drawn_platforms:
             platform.draw(self.screen)
         self.player.draw(self.screen)
 
