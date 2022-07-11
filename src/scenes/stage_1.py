@@ -33,7 +33,7 @@ class Stage(Scene):
         self.egg_cartridge = Cartridge(3, 400, 140, 96, 95)
         self.all_cartridges = all_cartridges
         self.cartridge_set = CartridgeSet(self.all_cartridges)
-        self.paper = Paper(100, 300, 80, 96, True)
+        self.paper = Paper(1100, 100, 80, 96, True)
 
     def update(self):
         super().update()
