@@ -8,7 +8,7 @@ from src.entities.platform import Platform, all_platforms
 
 from src.constants import CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
 
-camera = Camera(0, 0, 1280, 720)
+# camera = Camera(0, 0, 1280, 720, screen)
 
 # only platforms within camera view
 
@@ -17,7 +17,7 @@ class PlatformSet:
         self.drawn_platforms = []
         self.working_platforms = []
 
-    def update_platforms(self):
+    def update_platforms(self, camera):
         for platform in all_platforms:
             if platform not in self.drawn_platforms:
                 if pygame.Rect.colliderect(platform.rect, camera.rect):

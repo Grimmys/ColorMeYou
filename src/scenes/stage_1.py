@@ -18,6 +18,7 @@ from src.entities.platform_set import PlatformSet
 from src.entities.cartridge import Cartridge, all_cartridges
 from src.entities.cartridge_set import CartridgeSet
 from src.entities.paper import Paper
+from src.entities.camera import Camera
 
 
 class Stage(Scene):
@@ -35,6 +36,13 @@ class Stage(Scene):
         self.cartridge_set = CartridgeSet(self.all_cartridges)
         self.paper = Paper(1100, 100, 80, 96, True)
 
+        self.camera = Camera(0, 0, 1280, 720, screen)
+        self.moving_entities = []
+        for platform in self.all_platforms:
+            self.moving_entities.append(platform)
+        for cartridge in self.all_cartridges:
+            self.moving_entities.append(cartridge)
+        self.moving_entities.append(self.paper)
     def update(self):
         super().update()
         # update player
@@ -43,7 +51,7 @@ class Stage(Scene):
         self.player.detect_collision(self.platform_set.working_platforms)
         # update platforms
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
-        self.platform_set.update_platforms()
+        self.platform_set.update_platforms((0, 0, 1280, 720))
         # update objectives
         for cartridge in self.all_cartridges:
             cartridge.detect_collision(self.player)
@@ -52,6 +60,7 @@ class Stage(Scene):
         # update paper
         self.cartridge_set.check_win()
         self.paper.stand_counter()
+        self.camera.box_target_camera(self.player)
         print(self.paper.rect, self.player.rect)
 
     def draw(self):
@@ -65,7 +74,10 @@ class Stage(Scene):
 
         self.paper.draw(self.screen)
 
+        self.camera.custom_draw(self.player, self.moving_entities)
+
         self.player.draw(self.screen)
+
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)
