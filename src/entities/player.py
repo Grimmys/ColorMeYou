@@ -39,6 +39,23 @@ class Player(Entity):
         self.is_on_ground = False
         self.wall_collide = False
 
+    def spawn(self, x_coord, y_coord):
+        self.rect.x = x_coord
+        self.rect.y = y_coord
+
+        self.states = [False, False, False]
+        self.face_direction = 1
+
+        self.velocity = vec(0, 0)
+        self.accel = vec(0, 0)
+
+        self.walk_count = 0
+        self.stand_count = 0
+
+        self.idle = False
+        self.is_on_ground = False
+        self.wall_collide = False
+
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
         self.wall_collide = False

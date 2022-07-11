@@ -15,24 +15,22 @@ from src.entities.win_scene import WinScene
 from src.gui.toggler import Toggler
 # load in three colored backgrounds
 # keep track of state stuff
+from src.keyboard_setup import RESTART_KEY
 from src.scenes.scene import Scene
 
-P1 = Platform(BLACK, 0, 540, 300, 300, True)
-P2 = Platform(CYAN, 400, 440, 200, 40, True)
-P3 = Platform(MAGENTA, 700, 340, 200, 40, False)
-P4 = Platform(YELLOW, 1000, 240, 200, 40, False)
-P5 = Platform(GREEN, 1300, 140, 200, 40, True)
-P6 = Platform(BLUE, 1500, 200, 40, 400, True)
-P7 = Platform(BLACK, 1800, 100, 600, 700, True)
-
-test_plat = Platform(BLUE, 300, 200, 40, 500, True)
+PLAYER_INITIAL_X_POSITION = 100
+PLAYER_INITIAL_Y_POSITION = 100
 
 
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = [P1, P2, P3, P4, P5, P6, P7, test_plat]
-        self.player = Player(100, 100, PLAYER_WIDTH, PLAYER_HEIGHT)
+        self.platforms = [Platform(BLACK, 0, 540, 300, 300, True), Platform(CYAN, 400, 440, 200, 40, True),
+                          Platform(MAGENTA, 700, 340, 200, 40, False), Platform(YELLOW, 1000, 240, 200, 40, False),
+                          Platform(GREEN, 1300, 140, 200, 40, True), Platform(BLUE, 1500, 200, 40, 400, True),
+                          Platform(BLACK, 1800, 100, 600, 700, True), Platform(BLUE, 300, 200, 40, 500, True)
+                          ]
+        self.player = Player(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
         self.cyan_cartridge = Cartridge(0, 400, 340, 92, 84)
@@ -62,7 +60,8 @@ class Stage(Scene):
         self.platform_set.update_platforms(self.camera, self.platforms)
         # update objectives
         for cartridge in self.all_cartridges:
-            cartridge.detect_collision(self.player)
+            if not cartridge.collected:
+                cartridge.detect_collision(self.player)
         self.cartridge_set.update_collected()
 
         # update paper
@@ -91,21 +90,28 @@ class Stage(Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 self.player.states[0] = True
-            if event.key == pygame.K_f:
+            elif event.key == pygame.K_f:
                 self.player.states[1] = True
-            if event.key == pygame.K_e:
+            elif event.key == pygame.K_e:
                 self.player.states[2] = True
+            elif event.key == RESTART_KEY:
+                self.restart_level()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_s:
                 self.player.states[0] = False
-            if event.key == pygame.K_f:
+            elif event.key == pygame.K_f:
                 self.player.states[1] = False
-            if event.key == pygame.K_e:
+            elif event.key == pygame.K_e:
                 self.player.states[2] = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4:
                 self.toggler.toggle_clockwise()
-            if event.button == 5:
+            elif event.button == 5:
                 self.toggler.toggle_counterclockwise()
         if self.cartridge_set.no_egg_win:
             self.paper.navigate(self.player, self.screen, WinScene)
+
+    def restart_level(self):
+        self.player.spawn(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
+        for cartridge in self.all_cartridges:
+            cartridge.collected = False

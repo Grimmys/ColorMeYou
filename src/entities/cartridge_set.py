@@ -12,9 +12,8 @@ class CartridgeSet:
 
     def update_collected(self):
         for cartridge in all_cartridges:
-            if cartridge.state == False and not cartridge.added:
+            if cartridge.collected:
                 self.collected.append(cartridge)
-                cartridge.added = True
 
     def check_win(self):
         if len(self.collected) >= 3:
