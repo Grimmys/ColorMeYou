@@ -41,13 +41,14 @@ class Stage(Scene):
         self.cartridge_set = CartridgeSet(self.all_cartridges)
         self.paper = Paper(1100, 100, 80, 96, True)
 
-        self.camera = Camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+        self.camera = Camera(200, 100,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
         for platform in self.platforms:
             self.moving_entities.append(platform)
         for cartridge in self.all_cartridges:
             self.moving_entities.append(cartridge)
         self.moving_entities.append(self.paper)
+        self.moving_entities.append(self.player)
 
     def update(self):
         super().update()
@@ -68,7 +69,7 @@ class Stage(Scene):
         self.cartridge_set.check_win()
         self.paper.stand_counter()
         self.camera.box_target_camera(self.player)
-        print(self.paper.rect, self.player.rect)
+        print(self.camera.rect, self.player.rect.right, self.platforms[7].rect, pygame.Rect.colliderect(self.player.rect, self.platforms[7].rect))
 
     def draw(self):
         super().draw()
@@ -81,9 +82,9 @@ class Stage(Scene):
 
         self.paper.draw(self.screen)
 
-        # self.camera.custom_draw(self.player, self.moving_entities)
-
         self.player.draw(self.screen)
+
+        # self.camera.custom_draw(self.player, self.moving_entities)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)

@@ -8,9 +8,6 @@ from src.entities.platform import Platform
 
 from src.constants import CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
 
-# camera = Camera(0, 0, 1280, 720, screen)
-
-
 # only platforms within camera view
 
 class PlatformSet:

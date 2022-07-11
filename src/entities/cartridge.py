@@ -26,6 +26,7 @@ class Cartridge(Entity):
     def draw(self, screen):
         if not self.collected:
             screen.blit(cartridges[self.color], (self.rect[0], self.rect[1]))
+        # draw indicators on screen
         if self.collected:
             if self.color == 0:
                 pygame.draw.rect(screen, CYAN, (300, 10, 20, 20))

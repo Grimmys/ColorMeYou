@@ -34,13 +34,17 @@ class Camera(Entity):
         if target.rect.bottom > self.camera_rect.bottom:
             self.camera_rect.bottom = target.rect.bottom
 
-        self.offset.x = self.camera_rect.left - 200
-        self.offset.y = self.camera_rect.top - 100
+        # self.offset.x = self.camera_rect.left - 20
+        # self.offset.y = self.camera_rect.top - 10
 
     def custom_draw(self, player, moving_entities):
         self.box_target_camera(player)
 
-        # active elements
+        # # active elements
+
         for entity in moving_entities:
-            offset_pos = entity.rect.topleft - self.offset
-            self.screen.blit(entity, offset_pos)
+            entity.rect.x += self.offset.x
+            entity.rect.y += self.offset.y
+        # for entity in moving_entities:
+        #     offset_pos = entity.rect.topleft - self.offset
+        #     self.screen.blit(entity, offset_pos)
