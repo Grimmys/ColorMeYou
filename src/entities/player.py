@@ -24,7 +24,7 @@ class Player(Entity):
     def __init__(self, x_coord, y_coord, width, height):
         super().__init__(x_coord, y_coord, width, height)
         # self states listens to keyboard inputs: left, right, up
-        
+
         self.states = [False, False, False]
         self.face_direction = 1
 
@@ -39,12 +39,11 @@ class Player(Entity):
         self.is_on_ground = False
         self.wall_collide = False
 
-
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
         self.wall_collide = False
         for platform in platforms:
-            if pygame.Rect.colliderect(self.rect, platform.rect):
+            if platform.is_active and pygame.Rect.colliderect(self.rect, platform.rect):
                 # vertical collision detection
                 if self.rect.centery < platform.rect.top:
                     self.rect.y = platform.rect.top - self.rect.height

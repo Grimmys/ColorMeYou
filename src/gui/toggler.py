@@ -34,19 +34,19 @@ class Toggler:
         for platform in platforms:
             if self.state == 0:
                 if platform.color not in CYAN_MODE:
-                    platform.state = False
+                    platform.is_active = False
                 else:
-                    platform.state = True
+                    platform.is_active = True
             elif self.state == 1:
                 if platform.color not in MAGENTA_MODE:
-                    platform.state = False
+                    platform.is_active = False
                 else:
-                    platform.state = True
+                    platform.is_active = True
             elif self.state == 2:
                 if platform.color not in YELLOW_MODE:
-                    platform.state = False
+                    platform.is_active = False
                 else:
-                    platform.state = True
+                    platform.is_active = True
 
     def draw(self, screen):
         self.screen = screen

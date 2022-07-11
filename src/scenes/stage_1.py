@@ -2,29 +2,36 @@
 
 import pygame
 
-from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, \
-    CYAN, YELLOW, MAGENTA, BLUE, RED, GREEN, BLACK
-from src.entities.platform import Platform
-from src.entities.player import Player
-from src.entities.win_scene import WinScene
-
-from src.gui.toggler import Toggler
-
-# load in three colored backgrounds
-# keep track of state stuff
-from src.scenes.scene import Scene
-from src.entities.platform import Platform, all_platforms
-from src.entities.platform_set import PlatformSet
+from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, SCREEN_WIDTH, \
+    SCREEN_HEIGHT
+from src.entities.camera import Camera
 from src.entities.cartridge import Cartridge, all_cartridges
 from src.entities.cartridge_set import CartridgeSet
 from src.entities.paper import Paper
-from src.entities.camera import Camera
+from src.entities.platform import Platform
+from src.entities.platform_set import PlatformSet
+from src.entities.player import Player
+from src.entities.win_scene import WinScene
+from src.gui.toggler import Toggler
+# load in three colored backgrounds
+# keep track of state stuff
+from src.scenes.scene import Scene
+
+P1 = Platform(BLACK, 0, 540, 300, 300, True)
+P2 = Platform(CYAN, 400, 440, 200, 40, True)
+P3 = Platform(MAGENTA, 700, 340, 200, 40, False)
+P4 = Platform(YELLOW, 1000, 240, 200, 40, False)
+P5 = Platform(GREEN, 1300, 140, 200, 40, True)
+P6 = Platform(BLUE, 1500, 200, 40, 400, True)
+P7 = Platform(BLACK, 1800, 100, 600, 700, True)
+
+test_plat = Platform(BLUE, 300, 200, 40, 500, True)
 
 
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.all_platforms = all_platforms
+        self.platforms = [P1, P2, P3, P4, P5, P6, P7, test_plat]
         self.player = Player(100, 100, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
@@ -36,22 +43,23 @@ class Stage(Scene):
         self.cartridge_set = CartridgeSet(self.all_cartridges)
         self.paper = Paper(1100, 100, 80, 96, True)
 
-        self.camera = Camera(0, 0, 1280, 720, screen)
+        self.camera = Camera(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, screen)
         self.moving_entities = []
-        for platform in self.all_platforms:
+        for platform in self.platforms:
             self.moving_entities.append(platform)
         for cartridge in self.all_cartridges:
             self.moving_entities.append(cartridge)
         self.moving_entities.append(self.paper)
+
     def update(self):
         super().update()
         # update player
         self.player.update_position()
         self.player.walk_counter()
-        self.player.detect_collision(self.platform_set.working_platforms)
+        self.player.detect_collision(self.platforms)
         # update platforms
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
-        self.platform_set.update_platforms((0, 0, 1280, 720))
+        self.platform_set.update_platforms(self.camera, self.platforms)
         # update objectives
         for cartridge in self.all_cartridges:
             cartridge.detect_collision(self.player)
@@ -74,10 +82,9 @@ class Stage(Scene):
 
         self.paper.draw(self.screen)
 
-        self.camera.custom_draw(self.player, self.moving_entities)
+        # self.camera.custom_draw(self.player, self.moving_entities)
 
         self.player.draw(self.screen)
-
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)
@@ -102,4 +109,3 @@ class Stage(Scene):
                 self.toggler.toggle_counterclockwise()
         if self.cartridge_set.no_egg_win:
             self.paper.navigate(self.player, self.screen, WinScene)
-        

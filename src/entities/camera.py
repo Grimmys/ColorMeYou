@@ -1,28 +1,30 @@
 # camera
 
 import pygame
+
+from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from src.entities.entity import Entity
 
-vec =  pygame.math.Vector2
+vec = pygame.math.Vector2
+
 
 class Camera(Entity):
     def __init__(self, x_coord, y_coord, width, height, screen):
         super().__init__(x_coord, y_coord, width, height)
         self.screen = screen
-        
+
         self.offset = vec(0, 0)
-        self.half_w = 640
-        self.half_h = 360
+        self.half_w = SCREEN_WIDTH // 2
+        self.half_h = SCREEN_HEIGHT // 2
 
         # self.camera_borders = {'left': 200, 'right': 200, 'top': 100, 'bottom': 100}
         left = 200
         top = 100
-        width = 1280 - 400
-        height = 720 - 200
+        width = SCREEN_WIDTH - 400
+        height = SCREEN_HEIGHT - 200
         self.camera_rect = pygame.Rect(left, top, width, height)
-    
-    def box_target_camera(self, target):
 
+    def box_target_camera(self, target):
         if target.rect.left < self.camera_rect.left:
             self.camera_rect.left = target.rect.left
         if target.rect.right > self.camera_rect.right:
@@ -36,7 +38,6 @@ class Camera(Entity):
         self.offset.y = self.camera_rect.top - 100
 
     def custom_draw(self, player, moving_entities):
-    
         self.box_target_camera(player)
 
         # active elements
