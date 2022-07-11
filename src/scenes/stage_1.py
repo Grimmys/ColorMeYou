@@ -93,7 +93,7 @@ class Stage(Scene):
             elif event.key == pygame.K_f:
                 self.player.states[1] = True
             elif event.key == pygame.K_e:
-                self.player.states[2] = True
+                self.player.jumping = True
             elif event.key == RESTART_KEY:
                 self.restart_level()
         if event.type == pygame.KEYUP:
@@ -102,7 +102,7 @@ class Stage(Scene):
             elif event.key == pygame.K_f:
                 self.player.states[1] = False
             elif event.key == pygame.K_e:
-                self.player.states[2] = False
+                self.player.jumping = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4:
                 self.toggler.toggle_clockwise()

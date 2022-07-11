@@ -19,6 +19,9 @@ from src.gui.load_sprites import player_right_idle, player_right_walk, player_le
 
 vec = pygame.math.Vector2
 
+LEFT = 0
+RIGHT = 1
+
 
 class Player(Entity):
     def __init__(self, x_coord, y_coord, width, height):
@@ -33,8 +36,9 @@ class Player(Entity):
         if y_coord is not None:
             self.rect.y = y_coord
 
-        self.states = [False, False, False]
-        self.face_direction = 1
+        self.states = [False, False]
+        self.jumping = False
+        self.face_direction = RIGHT
 
         self.velocity = vec(0, 0)
         self.accel = vec(0, 0)
@@ -51,41 +55,44 @@ class Player(Entity):
         self.wall_collide = False
         for platform in platforms:
             if platform.is_active and pygame.Rect.colliderect(self.rect, platform.rect):
-                # vertical collision detection
-                if self.rect.centery < platform.rect.top:
-                    self.rect.y = platform.rect.top - self.rect.height
-                    self.velocity.y = 0
-                    self.is_on_ground = True
+                self.handle_collision(platform)
+
+    def handle_collision(self, platform):
+        # vertical collision detection
+        if self.rect.centery < platform.rect.top:
+            self.rect.y = platform.rect.top - self.rect.height
+            self.velocity.y = 0
+            self.is_on_ground = True
+            return
+        # horizontal collision detection
+        if self.face_direction == RIGHT:
+            # platform pieces
+            if platform.rect.width > platform.rect.height:
+                if self.rect.centery > platform.rect.left:
+                    self.rect.right = platform.rect.left
+                    self.velocity.x = 0
+                    self.wall_collide = True
                     return
-                # horizontal collision detection
-                if self.face_direction == 1:
-                    # platform pieces
-                    if platform.rect.width > platform.rect.height:
-                        if self.rect.centery > platform.rect.left:
-                            self.rect.right = platform.rect.left
-                            self.velocity.x = 0
-                            self.wall_collide = True
-                            return
-                    # wall pieces
-                    elif platform.rect.width < platform.rect.height:
-                        if self.rect.right > platform.rect.left:
-                            self.rect.right = platform.rect.left
-                            self.velocity.x = 0
-                            self.wall_collide = True
-                            return
-                if self.face_direction == 0:
-                    if platform.rect.width > platform.rect.height:
-                        if self.rect.centery < platform.rect.right:
-                            self.rect.left = platform.rect.right
-                            self.velocity.x = 0
-                            self.wall_collide = True
-                            return
-                    elif platform.rect.width < platform.rect.height:
-                        if self.rect.left < platform.rect.right:
-                            self.rect.left = platform.rect.right
-                            self.velocity.x = 0
-                            self.wall_collide = True
-                            return
+            # wall pieces
+            elif platform.rect.width < platform.rect.height:
+                if self.rect.right > platform.rect.left:
+                    self.rect.right = platform.rect.left
+                    self.velocity.x = 0
+                    self.wall_collide = True
+                    return
+        else:
+            if platform.rect.width > platform.rect.height:
+                if self.rect.centery < platform.rect.right:
+                    self.rect.left = platform.rect.right
+                    self.velocity.x = 0
+                    self.wall_collide = True
+                    return
+            elif platform.rect.width < platform.rect.height:
+                if self.rect.left < platform.rect.right:
+                    self.rect.left = platform.rect.right
+                    self.velocity.x = 0
+                    self.wall_collide = True
+                    return
 
     def update_position(self):
         # reset accel to 0
@@ -97,10 +104,10 @@ class Player(Entity):
             elif self.states[1]:
                 self.accel.x = ACCELERATION
                 self.velocity.x += 1.3
-        if self.states[2] and self.is_on_ground:
+        if self.jumping and self.is_on_ground:
             self.velocity.y = -19
             self.is_on_ground = False
-        if not self.states[2] and not self.is_on_ground:
+        if not self.jumping and not self.is_on_ground:
             if self.velocity.y < -5:
                 self.velocity.y = -5
 
@@ -111,12 +118,9 @@ class Player(Entity):
     def walk_counter(self):
         # find first item in self.states that is true
         # set idle state
-        if self.states == [False, False, False]:
-            self.idle = True
-        elif True in self.states:
-            self.idle = False
-            if self.states.index(True) != 2:
-                self.face_direction = self.states.index(True)
+        self.idle = self.states == [False, False] and not self.jumping
+        if True in self.states:
+            self.face_direction = self.states.index(True)
 
         if not self.idle:
             self.walk_count += 1
@@ -130,24 +134,24 @@ class Player(Entity):
         # 4 * 7 - 1
         if self.walk_count > 27:
             self.walk_count = 0
-
     # determine what img to blit
     # if not colliding, then falling
+
     def draw(self, screen):
         if self.idle:
-            if self.face_direction == 0:
+            if self.face_direction == LEFT:
                 screen.blit(player_left_idle[self.stand_count // 7], self.rect)
-            elif self.face_direction == 1:
+            elif self.face_direction == RIGHT:
                 screen.blit(player_right_idle[self.stand_count // 7], self.rect)
-        if not self.idle:
+        else:
             # if moving left, right, or jumping
-            if not self.states[2]:
-                if self.face_direction == 0:
+            if not self.jumping:
+                if self.face_direction == LEFT:
                     screen.blit(player_left_walk[self.walk_count // 7], self.rect)
-                elif self.face_direction == 1:
+                elif self.face_direction == RIGHT:
                     screen.blit(player_right_walk[self.walk_count // 7], self.rect)
-            if self.states[2]:
-                if self.face_direction == 0:
+            else:
+                if self.face_direction == LEFT:
                     screen.blit(player_left_jump, self.rect)
-                elif self.face_direction == 1:
+                elif self.face_direction == RIGHT:
                     screen.blit(player_right_jump, self.rect)
