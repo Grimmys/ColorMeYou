@@ -25,23 +25,13 @@ class Player(Entity):
         super().__init__(x_coord, y_coord, width, height)
         # self states listens to keyboard inputs: left, right, up
 
-        self.states = [False, False, False]
-        self.face_direction = 1
+        self.spawn()
 
-        self.velocity = vec(0, 0)
-        self.accel = vec(0, 0)
-
-        # blit animation tracker
-        self.walk_count = 0
-        self.stand_count = 0
-
-        self.idle = False
-        self.is_on_ground = False
-        self.wall_collide = False
-
-    def spawn(self, x_coord, y_coord):
-        self.rect.x = x_coord
-        self.rect.y = y_coord
+    def spawn(self, x_coord=None, y_coord=None):
+        if x_coord is not None:
+            self.rect.x = x_coord
+        if y_coord is not None:
+            self.rect.y = y_coord
 
         self.states = [False, False, False]
         self.face_direction = 1
@@ -95,7 +85,7 @@ class Player(Entity):
                             self.rect.left = platform.rect.right
                             self.velocity.x = 0
                             self.wall_collide = True
-                            return                        
+                            return
 
     def update_position(self):
         # reset accel to 0
