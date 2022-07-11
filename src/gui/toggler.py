@@ -14,21 +14,22 @@ from src.constants import CYAN_MODE, MAGENTA_MODE, YELLOW_MODE
 BG_IMG_POSITION = (-720, -780)
 TOGGLER_POSITION = (15, 15)
 
+
 class Toggler:
     def __init__(self):
         self.state = 0
-    
+
     def toggle_clockwise(self):
         if self.state != 2:
             self.state += 1
         else:
             self.state = 0
-    
+
     def toggle_counterclockwise(self):
         if self.state != 0:
             self.state -= 1
         else:
-            self.state = 2   
+            self.state = 2
 
     def toggle_platforms(self, platforms: Sequence[Platform]):
         for platform in platforms:
@@ -48,7 +49,9 @@ class Toggler:
                 else:
                     platform.is_active = True
 
+    def reset_state(self):
+        self.state = 0
+
     def draw(self, screen):
-        self.screen = screen
-        self.screen.blit(backgrounds[self.state], BG_IMG_POSITION)
-        self.screen.blit(toggles[self.state], TOGGLER_POSITION)
+        screen.blit(backgrounds[self.state], BG_IMG_POSITION)
+        screen.blit(toggles[self.state], TOGGLER_POSITION)

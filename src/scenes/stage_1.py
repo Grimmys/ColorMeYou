@@ -39,7 +39,7 @@ class Stage(Scene):
         self.egg_cartridge = Cartridge(3, 400, 140, 96, 95)
         self.all_cartridges = all_cartridges
         self.cartridge_set = CartridgeSet(self.all_cartridges)
-        self.paper = Paper(1100, 100, 80, 96, True)
+        self.paper = Paper(1100, 100, 80, 96)
 
         self.camera = Camera(200, 100,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
@@ -64,7 +64,6 @@ class Stage(Scene):
             if not cartridge.collected:
                 cartridge.detect_collision(self.player)
         self.cartridge_set.update_collected()
-
         # update paper
         self.cartridge_set.check_win()
         self.paper.stand_counter()
@@ -114,5 +113,7 @@ class Stage(Scene):
 
     def restart_level(self):
         self.player.spawn(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
+        self.toggler.reset_state()
+        self.paper.collected = False
         for cartridge in self.all_cartridges:
             cartridge.collected = False
