@@ -117,6 +117,9 @@ for i in range(0, 3):
     cartridge_coords.append((i * 92, 212 + 96 + 80, i * 92 + 92, 212 + 96 + 80 + 84))
 misc_ss.load_strip(cartridge_coords, cartridges, 92, 84)
 
+egg_cartridge_img = pygame.image.load("assets/images/egg_cartridge.png")
+cartridges.append(egg_cartridge_img)
+
 # main menu buttons
 start_button_rect = (0, 0, 568, 112)
 start_button_img = lit_buttons.image_at(start_button_rect, 568, 112)

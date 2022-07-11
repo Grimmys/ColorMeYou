@@ -6,7 +6,7 @@ from src.gui.load_sprites import cartridges
 from src.constants import CYAN, MAGENTA, YELLOW, INTERACT_SOUND
 # C - 0, M - 1, Y - 2
 
-cartridge_set = []
+all_cartridges = []
 
 class Cartridge(Entity):
     def __init__(self, color, x_coord, y_coord, width, height):
@@ -15,6 +15,8 @@ class Cartridge(Entity):
         self.state = True
         self.indicator = False
         self.played = False
+        all_cartridges.append(self)
+        self.added = False
 
     def detect_collision(self, player):
         if pygame.Rect.colliderect(self.rect, player.rect):
