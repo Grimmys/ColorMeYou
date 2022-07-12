@@ -26,11 +26,10 @@ if __name__ == "__main__":
                 if event.key == pygame.K_q:
                     game_is_active = False
             active_scene.process_event(event)
-
         active_scene.draw()
         active_scene.update()
         if active_scene.next_scene is not None:
+            active_scene.timer_until_next_scene -= 1
             if active_scene.timer_until_next_scene <= 0:
                 active_scene = active_scene.next_scene
-            active_scene.timer_until_next_scene -= 1
         pygame.display.update()
