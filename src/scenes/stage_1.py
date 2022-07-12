@@ -58,7 +58,7 @@ class Stage(Scene):
         self.player.detect_collision(self.platforms)
         # update platforms
         self.toggler.toggle_platforms(self.platform_set.drawn_platforms)
-        self.platform_set.update_platforms(self.camera, self.platforms)
+        self.platform_set.update_platforms(self.platforms)
         # update objectives
         for cartridge in self.all_cartridges:
             if not cartridge.collected:
@@ -67,23 +67,18 @@ class Stage(Scene):
         # update paper
         self.cartridge_set.check_win()
         self.paper.stand_counter()
-        self.camera.box_target_camera(self.player)
-        print(self.camera.rect, self.player.rect.right, self.platforms[7].rect, pygame.Rect.colliderect(self.player.rect, self.platforms[7].rect))
+        self.camera.box_target_camera(self.player, self.moving_entities)
+        print(self.camera.offset)
 
     def draw(self):
         super().draw()
         self.toggler.draw(self.screen)
         for platform in self.platform_set.drawn_platforms:
             platform.draw(self.screen)
-
         for cartridge in self.all_cartridges:
             cartridge.draw(self.screen)
-
         self.paper.draw(self.screen)
-
         self.player.draw(self.screen)
-
-        # self.camera.custom_draw(self.player, self.moving_entities)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)

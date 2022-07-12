@@ -24,6 +24,7 @@ class Paper(Entity):
     def navigate(self, player, screen, destination: Type[Scene]):
         if pygame.Rect.colliderect(self.rect, player.rect):
             self.collected = True
+            # take two frames to blit win animation
             screen.blit(lvl_win[0], (self.rect.x, self.rect.y))
             screen.blit(lvl_win[1], (self.rect.x, self.rect.y))
             page_instance = destination(screen)

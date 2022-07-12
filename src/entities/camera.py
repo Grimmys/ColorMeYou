@@ -17,14 +17,17 @@ class Camera(Entity):
         self.half_w = SCREEN_WIDTH // 2
         self.half_h = SCREEN_HEIGHT // 2
 
-        # self.camera_borders = {'left': 200, 'right': 200, 'top': 100, 'bottom': 100}
-        left = 200
-        top = 100
-        width = SCREEN_WIDTH - 400
-        height = SCREEN_HEIGHT - 200
+        self.camera_borders = {'left': 200, 'right': 200, 'top': 200, 'bottom': 200}
+        left = self.camera_borders['left']
+        top = self.camera_borders['top']
+        width = SCREEN_WIDTH - 2 * self.camera_borders['left']
+        height = SCREEN_HEIGHT - 2 * self.camera_borders['top']
         self.camera_rect = pygame.Rect(left, top, width, height)
 
-    def box_target_camera(self, target):
+    def box_target_camera(self, target, moving_entities):
+
+        self.offset = vec(0, 0)
+
         if target.rect.left < self.camera_rect.left:
             self.camera_rect.left = target.rect.left
         if target.rect.right > self.camera_rect.right:
@@ -34,17 +37,19 @@ class Camera(Entity):
         if target.rect.bottom > self.camera_rect.bottom:
             self.camera_rect.bottom = target.rect.bottom
 
-        # self.offset.x = self.camera_rect.left - 20
-        # self.offset.y = self.camera_rect.top - 10
+        self.offset.x = self.camera_rect.left - self.camera_borders['left']
+        self.offset.y = self.camera_rect.top - self.camera_borders['top']
 
-    def custom_draw(self, player, moving_entities):
-        self.box_target_camera(player)
-
-        # # active elements
 
         for entity in moving_entities:
-            entity.rect.x += self.offset.x
-            entity.rect.y += self.offset.y
-        # for entity in moving_entities:
-        #     offset_pos = entity.rect.topleft - self.offset
-        #     self.screen.blit(entity, offset_pos)
+            entity.rect.x -= self.offset.x 
+            entity.rect.y -= self.offset.y 
+
+    # def custom_draw(self, player, moving_entities):
+    #     self.box_target_camera(player)
+
+    #     # # active elements
+
+    #     # for entity in moving_entities:
+    #     #     offset_pos = entity.rect.topleft - self.offset
+    #     #     self.screen.blit(entity, offset_pos)
