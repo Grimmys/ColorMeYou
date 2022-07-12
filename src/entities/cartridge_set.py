@@ -1,23 +1,14 @@
 # manage cartridge sets
-
-from src.entities.cartridge import all_cartridges
+from src.entities.cartridge import Color
 
 
 class CartridgeSet:
     def __init__(self, all_cartridges):
-        self.collected = []
         self.egg_win = False
-        self.no_egg_win = False
         self.all_cartridges = all_cartridges
 
-    def update_collected(self):
-        for cartridge in all_cartridges:
-            if cartridge.collected:
-                self.collected.append(cartridge)
-
-    def check_win(self):
-        if len(self.collected) >= 3:
-            for cartridge in all_cartridges:
-                if cartridge.color == 3:
-                    self.egg_win = True
-            self.no_egg_win = True
+    def check_win(self) -> bool:
+        for cartridge in self.all_cartridges:
+            if cartridge.color == Color.EGG and cartridge.collected:
+                self.egg_win = True
+        return all([cartridge.collected for cartridge in self.all_cartridges if cartridge.is_required])

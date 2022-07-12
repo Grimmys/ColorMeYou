@@ -12,6 +12,7 @@ from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 screen_rect = (0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
+
 class PlatformSet:
     def __init__(self):
         self.drawn_platforms = []

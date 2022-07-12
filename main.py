@@ -30,5 +30,7 @@ if __name__ == "__main__":
         active_scene.draw()
         active_scene.update()
         if active_scene.next_scene is not None:
-            active_scene = active_scene.next_scene
+            if active_scene.timer_until_next_scene <= 0:
+                active_scene = active_scene.next_scene
+            active_scene.timer_until_next_scene -= 1
         pygame.display.update()

@@ -8,6 +8,8 @@ SCREEN_HEIGHT = 720
 GAME_TITLE = "Color Me You"
 GAME_ICON = pygame.image.load('assets\images\icon.png')
 
+DELAY_BEFORE_NEXT_SCENE = 60
+
 INTERACT_SOUND = pygame.mixer.Sound("assets/sounds/interact_sound.mp3")
 INTERACT_SOUND.set_volume(0.4)
 

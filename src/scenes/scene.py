@@ -8,6 +8,7 @@ class Scene:
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
         self.next_scene: Optional[Scene] = None
+        self.timer_until_next_scene = 0
 
     def run(self):
         pass
