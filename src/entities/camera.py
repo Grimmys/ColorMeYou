@@ -42,9 +42,9 @@ class Camera(Entity):
             self.camera_rect.left = target.rect.left
         if target.rect.right > self.camera_rect.right:
             self.camera_rect.right = target.rect.right
-        if target.rect.top < self.camera_rect.top:
+        if target.rect.top > self.camera_rect.top:
             self.camera_rect.top = target.rect.top
-        if target.rect.bottom > self.camera_rect.bottom:
+        if target.rect.bottom < self.camera_rect.bottom:
             self.camera_rect.bottom = target.rect.bottom
 
         if self.collide.x:
