@@ -41,7 +41,7 @@ class Stage(Scene):
         self.cartridge_set = CartridgeSet(self.all_cartridges)
         self.paper = Paper(1100, 100, 80, 96)
 
-        self.camera = Camera(200, 100,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
+        self.camera = Camera(200, 200,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
         for platform in self.platforms:
             self.moving_entities.append(platform)
@@ -68,7 +68,7 @@ class Stage(Scene):
         self.cartridge_set.check_win()
         self.paper.stand_counter()
         self.camera.box_target_camera(self.player, self.moving_entities)
-        print(self.camera.offset)
+        print(self.camera.offset, self.player.rect.left, self.camera.camera_rect.left)
 
     def draw(self):
         super().draw()

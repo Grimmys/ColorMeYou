@@ -11,7 +11,7 @@ from src.entities.platform import Platform
 
 from src.constants import CYAN_MODE, MAGENTA_MODE, YELLOW_MODE
 
-BG_IMG_POSITION = (-720, -780)
+BG_IMG_POSITION = (0, 0)
 TOGGLER_POSITION = (15, 15)
 
 
