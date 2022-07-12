@@ -1,4 +1,4 @@
 import pygame
 
-RESTART_KEY = pygame.K_y
+RESTART_KEY = pygame.K_r
 

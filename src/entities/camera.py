@@ -15,7 +15,10 @@ class Camera(Entity):
 
         self.offset = vec(0, 0)
 
-        self.camera_borders = {'left': 300, 'right': 300, 'top': 300, 'bottom': 300}
+        self.half_w = SCREEN_WIDTH // 2
+        self.half_h = SCREEN_HEIGHT // 2
+
+        self.camera_borders = {'left': 640, 'right': 640, 'top': 360, 'bottom': 360}
         left = self.camera_borders['left']
         top = self.camera_borders['top']
         width = SCREEN_WIDTH - 2 * self.camera_borders['left']
@@ -58,6 +61,14 @@ class Camera(Entity):
                 entity.rect.x -= self.offset.x 
                 entity.rect.y -= self.offset.y 
 
+    def center_camera(self, target, moving_entities):
+        self.offset.x = target.rect.centerx - self.half_w
+        self.offset.y = target.rect.centery - self.half_h
+        
+        for entity in moving_entities:
+            entity.rect.x -= self.offset.x
+            entity.rect.y -= self.offset.y
+  
     # def custom_draw(self, player, moving_entities):
     #     self.box_target_camera(player)
 

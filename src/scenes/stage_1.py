@@ -2,7 +2,7 @@
 
 import pygame
 
-from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, SCREEN_WIDTH, \
+from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED, SCREEN_WIDTH, \
     SCREEN_HEIGHT, INTERACT_SOUND, DELAY_BEFORE_NEXT_SCENE
 from src.entities.camera import Camera
 from src.entities.cartridge import Cartridge, Color
@@ -18,6 +18,8 @@ from src.gui.toggler import Toggler
 from src.keyboard_setup import RESTART_KEY
 from src.scenes.scene import Scene
 
+from src.entities.platforms_list import platforms
+
 PLAYER_INITIAL_X_POSITION = 100
 PLAYER_INITIAL_Y_POSITION = 100
 
@@ -25,21 +27,17 @@ PLAYER_INITIAL_Y_POSITION = 100
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = [Platform(BLACK, 0, 540, 1500, 300, True), Platform(CYAN, 400, 440, 200, 40, True),
-                          Platform(MAGENTA, 700, 340, 200, 40, False), Platform(YELLOW, 1000, 240, 200, 40, False),
-                          Platform(GREEN, 1300, 140, 200, 40, True), Platform(BLUE, 1500, 200, 40, 400, True),
-                          Platform(BLACK, 1800, 100, 600, 700, True), Platform(BLUE, 300, 200, 40, 500, True)
-                          ]
+        self.platforms = platforms
         self.player = Player(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
-        self.cyan_cartridge = Cartridge(Color.CYAN, 400, 340, 92, 84, True)
-        self.magenta_cartridge = Cartridge(Color.MAGENTA, 600, 240, 92, 84, True)
-        self.yellow_cartridge = Cartridge(Color.YELLOW, 800, 140, 92, 84, True)
-        self.egg_cartridge = Cartridge(Color.EGG, 400, 140, 96, 95)
+        self.cyan_cartridge = Cartridge(Color.CYAN, 200, 340, 92, 84, True)
+        self.magenta_cartridge = Cartridge(Color.MAGENTA, 2000, 240, 92, 84, True)
+        self.yellow_cartridge = Cartridge(Color.YELLOW, 200, 140, 92, 84, True)
+        self.egg_cartridge = Cartridge(Color.EGG, 200, 140, 96, 95)
         self.all_cartridges = [self.cyan_cartridge, self.magenta_cartridge, self.yellow_cartridge, self.egg_cartridge]
         self.cartridge_set = CartridgeSet(self.all_cartridges)
-        self.paper = Paper(1100, 100, 80, 96)
+        self.paper = Paper(4000, 100, 80, 96)
 
         self.camera = Camera(200, 200,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
@@ -69,7 +67,9 @@ class Stage(Scene):
             INTERACT_SOUND.play()
             self.paper.collected = True
             self.next_scene = WinScene(self.screen, self.cartridge_set)
-        self.camera.box_target_camera(self.player, self.moving_entities)
+        
+        # self.camera.box_target_camera(self.player, self.moving_entities)
+        self.camera.center_camera(self.player, self.moving_entities)
 
 
     def draw(self):
@@ -109,6 +109,8 @@ class Stage(Scene):
     def restart_level(self):
         self.player.spawn(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
         self.toggler.reset_state()
+        for entity in self.moving_entities:
+            entity.reset()
         self.paper.collected = False
         for cartridge in self.all_cartridges:
             cartridge.collected = False
