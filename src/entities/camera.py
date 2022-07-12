@@ -14,10 +14,8 @@ class Camera(Entity):
         self.screen = screen
 
         self.offset = vec(0, 0)
-        self.half_w = SCREEN_WIDTH // 2
-        self.half_h = SCREEN_HEIGHT // 2
 
-        self.camera_borders = {'left': 200, 'right': 200, 'top': 200, 'bottom': 200}
+        self.camera_borders = {'left': 300, 'right': 300, 'top': 300, 'bottom': 300}
         left = self.camera_borders['left']
         top = self.camera_borders['top']
         width = SCREEN_WIDTH - 2 * self.camera_borders['left']
@@ -27,6 +25,18 @@ class Camera(Entity):
     def box_target_camera(self, target, moving_entities):
 
         self.offset = vec(0, 0)
+        self.collide = vec(False, False)
+
+        # check collision
+        if target.rect.left <= self.camera_rect.left or target.rect.right >= self.camera_rect.right:
+            self.collide.x = True
+        else:
+            self.collide.x = False
+
+        if target.rect.top >= self.camera_rect.top or target.rect.bottom <= self.camera_rect.bottom:
+            self.collide.y = True
+        else:
+            self.collide.y = False
 
         if target.rect.left < self.camera_rect.left:
             self.camera_rect.left = target.rect.left
@@ -37,13 +47,16 @@ class Camera(Entity):
         if target.rect.bottom > self.camera_rect.bottom:
             self.camera_rect.bottom = target.rect.bottom
 
-        self.offset.x = self.camera_rect.left - self.camera_borders['left']
-        self.offset.y = self.camera_rect.top - self.camera_borders['top']
+        if self.collide.x:
+            self.offset.x = self.camera_rect.left - self.camera_borders['left']
+        if self.collide.y:
+            self.offset.y = self.camera_rect.top - self.camera_borders['top']
 
+        # self.offset = vec(0, 0)
 
         for entity in moving_entities:
-            entity.rect.x -= self.offset.x 
-            entity.rect.y -= self.offset.y 
+                entity.rect.x -= self.offset.x 
+                entity.rect.y -= self.offset.y 
 
     # def custom_draw(self, player, moving_entities):
     #     self.box_target_camera(player)

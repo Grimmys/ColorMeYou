@@ -25,7 +25,7 @@ PLAYER_INITIAL_Y_POSITION = 100
 class Stage(Scene):
     def __init__(self, screen):
         super().__init__(screen)
-        self.platforms = [Platform(BLACK, 0, 540, 300, 300, True), Platform(CYAN, 400, 440, 200, 40, True),
+        self.platforms = [Platform(BLACK, 0, 540, 1500, 300, True), Platform(CYAN, 400, 440, 200, 40, True),
                           Platform(MAGENTA, 700, 340, 200, 40, False), Platform(YELLOW, 1000, 240, 200, 40, False),
                           Platform(GREEN, 1300, 140, 200, 40, True), Platform(BLUE, 1500, 200, 40, 400, True),
                           Platform(BLACK, 1800, 100, 600, 700, True), Platform(BLUE, 300, 200, 40, 500, True)
@@ -68,7 +68,7 @@ class Stage(Scene):
         self.cartridge_set.check_win()
         self.paper.stand_counter()
         self.camera.box_target_camera(self.player, self.moving_entities)
-        print(self.camera.offset, self.player.rect.left, self.camera.camera_rect.left)
+        print(self.camera.collide)
 
     def draw(self):
         super().draw()
