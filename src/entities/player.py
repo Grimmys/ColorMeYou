@@ -101,12 +101,14 @@ class Player(Entity):
                 DEATH_SOUND.play()
 
     def update(self):
+        print(f"Player position: {self.rect}")
         if not self.death:
             self.update_position()
         else:
             self._timer_until_respawn -= 1
             if self._timer_until_respawn <= 0:
                 self.should_respawn = True
+        print(f"After update call: {self.rect}")
 
     def update_position(self):
         # reset accel to 0

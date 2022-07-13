@@ -20,8 +20,8 @@ from src.gui.brightness import brightness
 from src.keyboard_setup import RESTART_KEY
 from src.scenes.scene import Scene
 
-PLAYER_INITIAL_X_POSITION = 120
-PLAYER_INITIAL_Y_POSITION = 100
+PLAYER_INITIAL_X_POSITION = platforms[0].rect.width // 2 - PLAYER_WIDTH // 2
+PLAYER_INITIAL_Y_POSITION = 300
 
 
 class Stage(Scene):
@@ -50,9 +50,11 @@ class Stage(Scene):
         self.failure_played = False
         self.checkpoint_position = (PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
         self.current_lvl_win_frame = lvl_win_1
+        self.camera.center_camera(self.player, self.moving_entities)
 
     def update(self):
         super().update()
+        self.camera.center_camera(self.player, self.moving_entities)
         # update player
         self.player.update()
         self.player.walk_counter()
@@ -79,8 +81,6 @@ class Stage(Scene):
             self.failure_played = False
 
         self.player.death_event(self.moving_entities)
-
-        self.camera.center_camera(self.player, self.moving_entities)
 
         if self.player.should_respawn:
             self.restart_level(False, self.checkpoint_position)
@@ -139,3 +139,4 @@ class Stage(Scene):
                 cartridge.collected = False
             self.paper.collected = False
         self.timer_until_next_scene = DELAY_BEFORE_NEXT_SCENE
+        self.camera.center_camera(self.player, self.moving_entities)

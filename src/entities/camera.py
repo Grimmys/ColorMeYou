@@ -64,16 +64,7 @@ class Camera(Entity):
     def center_camera(self, target, moving_entities):
         self.offset.x = target.rect.centerx - self.half_w
         self.offset.y = target.rect.centery - self.half_h
-        
+
         for entity in moving_entities:
             entity.rect.x -= self.offset.x
             entity.rect.y -= self.offset.y
-  
-    # def custom_draw(self, player, moving_entities):
-    #     self.box_target_camera(player)
-
-    #     # # active elements
-
-    #     # for entity in moving_entities:
-    #     #     offset_pos = entity.rect.topleft - self.offset
-    #     #     self.screen.blit(entity, offset_pos)

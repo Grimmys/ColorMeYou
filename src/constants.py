@@ -1,5 +1,6 @@
 # constant things not game state lol
 import pygame
+
 pygame.init()
 
 SCREEN_WIDTH = 1280
