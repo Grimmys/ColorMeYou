@@ -38,8 +38,7 @@ class Stage(Scene):
         self.all_cartridges = [self.cyan_cartridge, self.magenta_cartridge, self.yellow_cartridge, self.egg_cartridge]
         self.cartridge_set = CartridgeSet(self.all_cartridges)
         self.paper = Paper(7100, 0, 80, 96)
-
-        self.camera = Camera(200, 200,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
+        self.camera = Camera(200, 200, SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
         for platform in self.platforms:
             self.moving_entities.append(platform)
@@ -72,19 +71,18 @@ class Stage(Scene):
                 SUCCESS_SOUND.play()
                 self.paper.collected = True
                 self.next_scene = WinScene(self.screen, self.cartridge_set)
-            if not self.cartridge_set.check_win():
-                if self.failure_played == False:
+            else:
+                if not self.failure_played:
                     FAILURE_SOUND.play()
                     self.failure_played = True
         else:
             self.failure_played = False
 
         self.player.death_event(self.moving_entities)
-        
+
         self.camera.center_camera(self.player, self.moving_entities)
 
         print(self.player.death, self.player.freefall_count)
-
 
     def draw(self):
         super().draw()
