@@ -3,7 +3,7 @@
 import pygame
 
 from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, INTERACT_SOUND, FAILURE_SOUND, SUCCESS_SOUND, DELAY_BEFORE_NEXT_SCENE
+    SCREEN_HEIGHT, INTERACT_SOUND, FAILURE_SOUND, SUCCESS_SOUND, DELAY_BEFORE_NEXT_SCENE, DELAY_BEFORE_RESPAWN
 from src.entities.camera import Camera
 from src.entities.cartridge import Cartridge, Color
 from src.entities.cartridge_set import CartridgeSet
@@ -31,6 +31,7 @@ class Stage(Scene):
         self.player = Player(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
+        self.death_line = Platform(BLACK, -1000, 2000, 10000, 20, True)
         self.cyan_cartridge = Cartridge(Color.CYAN, 2100, -10, 92, 84, True)
         self.magenta_cartridge = Cartridge(Color.MAGENTA, 3750, 590, 92, 84, True)
         self.yellow_cartridge = Cartridge(Color.YELLOW, 5000, -1010, 92, 84, True)
@@ -78,11 +79,12 @@ class Stage(Scene):
                     self.failure_played = True
         else:
             self.failure_played = False
-        # insert check for death event
-        # for entity in moving_entities:
-        #    entity.respawn()
+        # if self.player.death_event(self.death_line):
+        #     for entity in self.moving_entities:
+        #         entity.respawn()
         
         self.camera.center_camera(self.player, self.moving_entities)
+        print(self.player.rect, self.death_line.rect, self.player.death)
 
 
     def draw(self):

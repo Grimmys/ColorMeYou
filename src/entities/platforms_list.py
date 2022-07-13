@@ -1,8 +1,7 @@
 import pygame
 
 from src.entities.platform import Platform
-from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, INTERACT_SOUND, DELAY_BEFORE_NEXT_SCENE
+from src.constants import MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED
 
 
 death_line = Platform(BLACK, -1000, 2000, 10000, 20, True)

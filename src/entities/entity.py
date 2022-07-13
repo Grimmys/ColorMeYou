@@ -5,6 +5,7 @@ class Entity:
     def __init__(self, x_coord, y_coord, width, height):
         self.rect = pygame.Rect(x_coord, y_coord, width, height)
         self.initial_rect = pygame.Rect(x_coord, y_coord, width, height)
+        self.respawn_rect = self.rect
     def draw(self, screen):
         pass
     # reset to init position
@@ -13,7 +14,7 @@ class Entity:
     # if player picked up cartridge, record position of rect
     def record(self, player, cartridge):
         if pygame.Rect.collideRect(player.rect, cartridge.rect):
-            self.respawn = self.rect.copy()
+            self.respawn_rect = self.rect.copy()
     # respawn player at recorded rect
     def respawn(self):
-        self.rect = self.respawn.copy()
+        self.rect = self.respawn_rect.copy()

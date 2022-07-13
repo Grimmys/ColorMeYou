@@ -9,11 +9,11 @@ from typing import Sequence
 
 import pygame
 
-from src.constants import FRICTION, ACCELERATION
+from src.constants import DELAY_BEFORE_RESPAWN, FRICTION, ACCELERATION
 from src.entities.entity import Entity
 from src.entities.platform import Platform
 from src.gui.load_sprites import player_right_idle, player_right_walk, player_left_idle, \
-    player_left_walk, player_right_jump, player_left_jump
+    player_left_walk, player_right_jump, player_left_jump, player_death
 
 # don't forget character states with interact and death
 
@@ -49,6 +49,8 @@ class Player(Entity):
         self.idle = False
         self.is_on_ground = False
         self.wall_collide = False
+
+        self.death = False
 
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
@@ -94,6 +96,14 @@ class Player(Entity):
                     self.wall_collide = True
                     return
 
+    
+    def death_event(self, death_line):
+        if pygame.Rect.colliderect(self.rect, death_line.rect):
+            self.death = True
+        else:
+            self.death = False
+            
+
     def update_position(self):
         # reset accel to 0
         self.accel = vec(0, 0.8)
@@ -138,7 +148,10 @@ class Player(Entity):
     # if not colliding, then falling
 
     def draw(self, screen):
-        if self.idle:
+        if self.death:
+            self.timer_until_respawn = DELAY_BEFORE_RESPAWN
+            screen.blit(player_death, self.rect)
+        elif self.idle:
             if self.face_direction == LEFT:
                 screen.blit(player_left_idle[self.stand_count // 7], self.rect)
             elif self.face_direction == RIGHT:
