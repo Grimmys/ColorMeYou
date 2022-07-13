@@ -53,5 +53,7 @@ class Toggler:
         self.state = 0
 
     def draw(self, screen):
-        screen.blit(backgrounds[self.state], BG_IMG_POSITION)
         screen.blit(toggles[self.state], TOGGLER_POSITION)
+    
+    def draw_bg(self, screen):
+        screen.blit(backgrounds[self.state], BG_IMG_POSITION)

@@ -12,6 +12,10 @@ DELAY_BEFORE_NEXT_SCENE = 60
 
 INTERACT_SOUND = pygame.mixer.Sound("assets/sounds/interact_sound.mp3")
 INTERACT_SOUND.set_volume(0.4)
+FAILURE_SOUND = pygame.mixer.Sound("assets/sounds/failure_sound.mp3")
+FAILURE_SOUND.set_volume(0.2)
+SUCCESS_SOUND = pygame.mixer.Sound("assets/sounds/success_sound.mp3")
+SUCCESS_SOUND.set_volume(0.4)
 
 CYAN = (1, 176, 239)
 YELLOW = (255, 247, 1)

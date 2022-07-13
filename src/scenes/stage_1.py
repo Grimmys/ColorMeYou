@@ -3,7 +3,7 @@
 import pygame
 
 from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, INTERACT_SOUND, DELAY_BEFORE_NEXT_SCENE
+    SCREEN_HEIGHT, INTERACT_SOUND, FAILURE_SOUND, SUCCESS_SOUND, DELAY_BEFORE_NEXT_SCENE
 from src.entities.camera import Camera
 from src.entities.cartridge import Cartridge, Color
 from src.entities.cartridge_set import CartridgeSet
@@ -21,7 +21,7 @@ from src.scenes.scene import Scene
 from src.entities.platforms_list import platforms
 
 PLAYER_INITIAL_X_POSITION = 100
-PLAYER_INITIAL_Y_POSITION = 100
+PLAYER_INITIAL_Y_POSITION = 300
 
 
 class Stage(Scene):
@@ -31,13 +31,14 @@ class Stage(Scene):
         self.player = Player(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
-        self.cyan_cartridge = Cartridge(Color.CYAN, 200, 340, 92, 84, True)
-        self.magenta_cartridge = Cartridge(Color.MAGENTA, 2000, 240, 92, 84, True)
-        self.yellow_cartridge = Cartridge(Color.YELLOW, 200, 140, 92, 84, True)
-        self.egg_cartridge = Cartridge(Color.EGG, 200, 140, 96, 95)
+        self.cyan_cartridge = Cartridge(Color.CYAN, 2100, -10, 92, 84, True)
+        self.magenta_cartridge = Cartridge(Color.MAGENTA, 3750, 590, 92, 84, True)
+        self.yellow_cartridge = Cartridge(Color.YELLOW, 5000, -1010, 92, 84, True)
+        self.egg_cartridge = Cartridge(Color.EGG, 7100, 0, 96, 95)
         self.all_cartridges = [self.cyan_cartridge, self.magenta_cartridge, self.yellow_cartridge, self.egg_cartridge]
         self.cartridge_set = CartridgeSet(self.all_cartridges)
-        self.paper = Paper(4000, 100, 80, 96)
+        # self.paper = Paper(7100, 0, 80, 96)
+        self.paper = Paper(300, 500, 80, 96)
 
         self.camera = Camera(200, 200,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
@@ -48,6 +49,7 @@ class Stage(Scene):
         self.moving_entities.append(self.paper)
         self.moving_entities.append(self.player)
         self.timer_until_next_scene = DELAY_BEFORE_NEXT_SCENE
+        self.failure_played = False
 
     def update(self):
         super().update()
@@ -63,10 +65,17 @@ class Stage(Scene):
             if not cartridge.collected:
                 cartridge.detect_collision(self.player)
         self.paper.stand_counter()
-        if self.paper.detect_collision(self.player) and self.cartridge_set.check_win():
-            INTERACT_SOUND.play()
-            self.paper.collected = True
-            self.next_scene = WinScene(self.screen, self.cartridge_set)
+        if self.paper.detect_collision(self.player):
+            if self.cartridge_set.check_win():
+                SUCCESS_SOUND.play()
+                self.paper.collected = True
+                self.next_scene = WinScene(self.screen, self.cartridge_set)
+            if not self.cartridge_set.check_win():
+                if self.failure_played == False:
+                    FAILURE_SOUND.play()
+                    self.failure_played = True
+        else:
+            self.failure_played = False
         
         # self.camera.box_target_camera(self.player, self.moving_entities)
         self.camera.center_camera(self.player, self.moving_entities)
@@ -74,13 +83,14 @@ class Stage(Scene):
 
     def draw(self):
         super().draw()
-        self.toggler.draw(self.screen)
+        self.toggler.draw_bg(self.screen)
         for platform in self.platform_set.drawn_platforms:
             platform.draw(self.screen)
         for cartridge in self.all_cartridges:
             cartridge.draw(self.screen)
         self.paper.draw(self.screen)
         self.player.draw(self.screen)
+        self.toggler.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)

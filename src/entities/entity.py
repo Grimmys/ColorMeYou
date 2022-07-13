@@ -7,5 +7,9 @@ class Entity:
         self.initial_rect = pygame.Rect(x_coord, y_coord, width, height)
     def draw(self, screen):
         pass
+    # reset to init position
     def reset(self):
         self.rect = self.initial_rect.copy()
+    
+    # def respawn(self, last_obtained):
+        
