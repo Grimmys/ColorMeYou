@@ -83,7 +83,7 @@ class Stage(Scene):
         self.camera.center_camera(self.player, self.moving_entities)
 
         if self.player.should_respawn:
-            self.restart_level()
+            self.restart_level(False)
 
         print(self.player.death, self.player.freefall_count)
 
@@ -108,7 +108,7 @@ class Stage(Scene):
             elif event.key == pygame.K_e:
                 self.player.jumping = True
             elif event.key == RESTART_KEY:
-                self.restart_level()
+                self.restart_level(True)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_s:
                 self.player.states[0] = False
@@ -122,12 +122,13 @@ class Stage(Scene):
             elif event.button == 5:
                 self.toggler.toggle_counterclockwise()
 
-    def restart_level(self):
+    def restart_level(self, reset_collected_elements: bool):
         self.player.spawn(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
         self.toggler.reset_state()
         for entity in self.moving_entities:
             entity.reset()
-        self.paper.collected = False
-        for cartridge in self.all_cartridges:
-            cartridge.collected = False
+        if reset_collected_elements:
+            for cartridge in self.all_cartridges:
+                cartridge.collected = False
+            self.paper.collected = False
         self.timer_until_next_scene = DELAY_BEFORE_NEXT_SCENE
