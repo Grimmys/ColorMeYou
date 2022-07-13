@@ -2,24 +2,23 @@
 
 import pygame
 
-from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, INTERACT_SOUND, FAILURE_SOUND, SUCCESS_SOUND, DELAY_BEFORE_NEXT_SCENE, DELAY_BEFORE_RESPAWN
+from src.constants import PLAYER_WIDTH, PLAYER_HEIGHT, SCREEN_WIDTH, \
+    SCREEN_HEIGHT, FAILURE_SOUND, SUCCESS_SOUND, DELAY_BEFORE_NEXT_SCENE
 from src.entities.camera import Camera
 from src.entities.cartridge import Cartridge, Color
 from src.entities.cartridge_set import CartridgeSet
 from src.entities.paper import Paper
-from src.entities.platform import Platform
 from src.entities.platform_set import PlatformSet
+from src.entities.platforms_list import platforms
 from src.entities.player import Player
 from src.scenes.win_scene import WinScene
+from src.gui.load_sprites import lvl_win_1, lvl_win_2
 from src.gui.toggler import Toggler
 from src.gui.brightness import brightness
 # load in three colored backgrounds
 # keep track of state stuff
 from src.keyboard_setup import RESTART_KEY
 from src.scenes.scene import Scene
-
-from src.entities.platforms_list import platforms
 
 PLAYER_INITIAL_X_POSITION = 120
 PLAYER_INITIAL_Y_POSITION = 100
@@ -50,6 +49,7 @@ class Stage(Scene):
         self.timer_until_next_scene = DELAY_BEFORE_NEXT_SCENE
         self.failure_played = False
         self.checkpoint_position = (PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
+        self.current_lvl_win_frame = lvl_win_1
 
     def update(self):
         super().update()
@@ -85,6 +85,9 @@ class Stage(Scene):
         if self.player.should_respawn:
             self.restart_level(False, self.checkpoint_position)
 
+        if self.paper.collected and self.timer_until_next_scene == DELAY_BEFORE_NEXT_SCENE // 2:
+            self.current_lvl_win_frame = lvl_win_2
+
     def draw(self):
         super().draw()
         self.toggler.draw_bg(self.screen)
@@ -95,6 +98,9 @@ class Stage(Scene):
         self.paper.draw(self.screen)
         self.player.draw(self.screen)
         self.toggler.draw(self.screen)
+        if self.paper.collected:
+            self.screen.blit(self.current_lvl_win_frame, (self.screen.get_width() // 2 - lvl_win_1.get_height() // 2,
+                                                          self.screen.get_height() // 2 - lvl_win_1.get_height() // 2 - 200))
         brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
@@ -107,7 +113,8 @@ class Stage(Scene):
             elif event.key == pygame.K_e:
                 self.player.jumping = True
             elif event.key == RESTART_KEY:
-                self.restart_level(True)
+                if not self.paper.collected:
+                    self.restart_level(True)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_s:
                 self.player.states[0] = False
