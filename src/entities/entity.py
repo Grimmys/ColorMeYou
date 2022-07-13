@@ -10,6 +10,10 @@ class Entity:
     # reset to init position
     def reset(self):
         self.rect = self.initial_rect.copy()
-    
-    # def respawn(self, last_obtained):
-        
+    # if player picked up cartridge, record position of rect
+    def record(self, player, cartridge):
+        if pygame.Rect.collideRect(player.rect, cartridge.rect):
+            self.respawn = self.rect.copy()
+    # respawn player at recorded rect
+    def respawn(self):
+        self.rect = self.respawn.copy()

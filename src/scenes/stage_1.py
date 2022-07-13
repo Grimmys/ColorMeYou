@@ -34,11 +34,10 @@ class Stage(Scene):
         self.cyan_cartridge = Cartridge(Color.CYAN, 2100, -10, 92, 84, True)
         self.magenta_cartridge = Cartridge(Color.MAGENTA, 3750, 590, 92, 84, True)
         self.yellow_cartridge = Cartridge(Color.YELLOW, 5000, -1010, 92, 84, True)
-        self.egg_cartridge = Cartridge(Color.EGG, 7100, 0, 96, 95)
+        self.egg_cartridge = Cartridge(Color.EGG, 7300, 600, 96, 95)
         self.all_cartridges = [self.cyan_cartridge, self.magenta_cartridge, self.yellow_cartridge, self.egg_cartridge]
         self.cartridge_set = CartridgeSet(self.all_cartridges)
-        # self.paper = Paper(7100, 0, 80, 96)
-        self.paper = Paper(300, 500, 80, 96)
+        self.paper = Paper(7100, 0, 80, 96)
 
         self.camera = Camera(200, 200,  SCREEN_WIDTH - 400, SCREEN_HEIGHT - 200, screen)
         self.moving_entities = []
@@ -64,6 +63,9 @@ class Stage(Scene):
         for cartridge in self.all_cartridges:
             if not cartridge.collected:
                 cartridge.detect_collision(self.player)
+                if cartridge.detect_collision(self.player) and cartridge.color != Color.EGG:
+                    for entity in self.moving_entities:
+                        entity.record()
         self.paper.stand_counter()
         if self.paper.detect_collision(self.player):
             if self.cartridge_set.check_win():
@@ -76,8 +78,10 @@ class Stage(Scene):
                     self.failure_played = True
         else:
             self.failure_played = False
+        # insert check for death event
+        # for entity in moving_entities:
+        #    entity.respawn()
         
-        # self.camera.box_target_camera(self.player, self.moving_entities)
         self.camera.center_camera(self.player, self.moving_entities)
 
 

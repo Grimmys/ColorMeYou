@@ -47,6 +47,9 @@ Platform(CYAN, 4440, -720, 200, 40, True),
     # collect cartridge 3 here
 Platform(MAGENTA, 4740, -900, 600, 40, True),
     # put paper here
+    # part 4
+Platform(BLACK, 7300, 700, 100, 20, True),
+    # to win game, fall off on purpose to respawn at an earlier cartridge
 
 
 death_line]
