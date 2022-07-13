@@ -4,7 +4,7 @@ from src.entities.platform import Platform
 from src.constants import MAGENTA, CYAN, BLACK, GREEN, YELLOW, BLUE, RED
 
 
-death_line = Platform(BLACK, -1000, 2000, 10000, 20, True)
+# death_line = Platform(BLACK, -1000, 2000, 10000, 20, True)
 
 platforms = [
     # start stage
@@ -47,8 +47,8 @@ Platform(CYAN, 4440, -720, 200, 40, True),
 Platform(MAGENTA, 4740, -900, 600, 40, True),
     # put paper here
     # part 4
-Platform(BLACK, 7300, 700, 100, 20, True),
+Platform(BLACK, 7300, 700, 100, 20, True)]
     # to win game, fall off on purpose to respawn at an earlier cartridge
 
 
-death_line]
+# death_line

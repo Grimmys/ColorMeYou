@@ -9,7 +9,7 @@ from typing import Sequence
 
 import pygame
 
-from src.constants import DELAY_BEFORE_RESPAWN, FRICTION, ACCELERATION
+from src.constants import DEATH_SOUND, DELAY_BEFORE_RESPAWN, FRICTION, ACCELERATION
 from src.entities.entity import Entity
 from src.entities.platform import Platform
 from src.gui.load_sprites import player_right_idle, player_right_walk, player_left_idle, \
@@ -51,6 +51,9 @@ class Player(Entity):
         self.wall_collide = False
 
         self.death = False
+        self.freefall_count = 0
+
+        self.death_played = False
 
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
@@ -97,12 +100,26 @@ class Player(Entity):
                     return
 
     
-    def death_event(self, death_line):
-        if pygame.Rect.colliderect(self.rect, death_line.rect):
-            self.death = True
+    def death_event(self, moving_entities):
+        # if pygame.Rect.colliderect(self.rect, death_line.rect):
+        #     self.death = True
+        # else:
+        #     self.death = False
+        if not self.is_on_ground and not self.wall_collide:
+            self.freefall_count += 1
         else:
-            self.death = False
-            
+            self.freefall_count = 0
+        
+        if self.freefall_count == 120:
+            self.death = True
+            self.accel = vec(0, 0.8)
+            if not self.death_played:
+                DEATH_SOUND.play()
+                self.death_played = True
+            self.freefall_count = 0
+            for entity in moving_entities:
+                entity.respawn()
+            self.death_played = False
 
     def update_position(self):
         # reset accel to 0
@@ -149,7 +166,7 @@ class Player(Entity):
 
     def draw(self, screen):
         if self.death:
-            self.timer_until_respawn = DELAY_BEFORE_RESPAWN
+            # self.timer_until_respawn = DELAY_BEFORE_RESPAWN
             screen.blit(player_death, self.rect)
         elif self.idle:
             if self.face_direction == LEFT:

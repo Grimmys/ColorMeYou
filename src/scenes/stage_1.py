@@ -20,8 +20,8 @@ from src.scenes.scene import Scene
 
 from src.entities.platforms_list import platforms
 
-PLAYER_INITIAL_X_POSITION = 100
-PLAYER_INITIAL_Y_POSITION = 300
+PLAYER_INITIAL_X_POSITION = 120
+PLAYER_INITIAL_Y_POSITION = 100
 
 
 class Stage(Scene):
@@ -31,7 +31,6 @@ class Stage(Scene):
         self.player = Player(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION, PLAYER_WIDTH, PLAYER_HEIGHT)
         self.toggler = Toggler()
         self.platform_set = PlatformSet()
-        self.death_line = Platform(BLACK, -1000, 2000, 10000, 20, True)
         self.cyan_cartridge = Cartridge(Color.CYAN, 2100, -10, 92, 84, True)
         self.magenta_cartridge = Cartridge(Color.MAGENTA, 3750, 590, 92, 84, True)
         self.yellow_cartridge = Cartridge(Color.YELLOW, 5000, -1010, 92, 84, True)
@@ -79,12 +78,12 @@ class Stage(Scene):
                     self.failure_played = True
         else:
             self.failure_played = False
-        # if self.player.death_event(self.death_line):
-        #     for entity in self.moving_entities:
-        #         entity.respawn()
+
+        self.player.death_event(self.moving_entities)
         
         self.camera.center_camera(self.player, self.moving_entities)
-        print(self.player.rect, self.death_line.rect, self.player.death)
+
+        print(self.player.death, self.player.freefall_count)
 
 
     def draw(self):

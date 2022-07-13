@@ -82,7 +82,7 @@ player_l_interact = player_ss.image_at(player_l_interact_rect, 96, 120)
 # ------------------------------------------------------
 
 # death
-player_death_rect = (0, 780, 96, 840)
+player_death_rect = (0, 720, 96, 840)
 player_death = player_ss.image_at(player_death_rect, 96, 120)
 
 # ------------------------------------------------------

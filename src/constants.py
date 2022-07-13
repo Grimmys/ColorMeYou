@@ -17,6 +17,8 @@ FAILURE_SOUND = pygame.mixer.Sound("assets/sounds/failure_sound.mp3")
 FAILURE_SOUND.set_volume(0.2)
 SUCCESS_SOUND = pygame.mixer.Sound("assets/sounds/success_sound.mp3")
 SUCCESS_SOUND.set_volume(0.4)
+DEATH_SOUND = pygame.mixer.Sound("assets/sounds/death_sound.mp3")
+DEATH_SOUND.set_volume(0.4)
 
 CYAN = (1, 176, 239)
 YELLOW = (255, 247, 1)
