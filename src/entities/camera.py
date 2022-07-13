@@ -58,8 +58,8 @@ class Camera(Entity):
         # self.offset = vec(0, 0)
 
         for entity in moving_entities:
-                entity.rect.x -= self.offset.x 
-                entity.rect.y -= self.offset.y 
+            entity.rect.x -= self.offset.x
+            entity.rect.y -= self.offset.y
 
     def center_camera(self, target, moving_entities):
         self.offset.x = target.rect.centerx - self.half_w

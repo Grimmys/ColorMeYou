@@ -26,6 +26,8 @@ class Cartridge(Entity):
         if pygame.Rect.colliderect(self.rect, player.rect):
             self.collected = True
             INTERACT_SOUND.play()
+            return True
+        return False
 
     def draw(self, screen):
         if not self.collected:

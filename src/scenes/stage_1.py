@@ -48,6 +48,7 @@ class Stage(Scene):
         self.moving_entities.append(self.player)
         self.timer_until_next_scene = DELAY_BEFORE_NEXT_SCENE
         self.failure_played = False
+        self.checkpoint_position = (PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
 
     def update(self):
         super().update()
@@ -61,10 +62,8 @@ class Stage(Scene):
         # update objectives
         for cartridge in self.all_cartridges:
             if not cartridge.collected:
-                cartridge.detect_collision(self.player)
                 if cartridge.detect_collision(self.player) and cartridge.color != Color.EGG:
-                    for entity in self.moving_entities:
-                        entity.record()
+                    self.checkpoint_position = (cartridge.initial_rect.x, cartridge.initial_rect.y)
         self.paper.stand_counter()
         if self.paper.detect_collision(self.player):
             if self.cartridge_set.check_win():
@@ -83,9 +82,7 @@ class Stage(Scene):
         self.camera.center_camera(self.player, self.moving_entities)
 
         if self.player.should_respawn:
-            self.restart_level(False)
-
-        print(self.player.death, self.player.freefall_count)
+            self.restart_level(False, self.checkpoint_position)
 
     def draw(self):
         super().draw()
@@ -122,11 +119,12 @@ class Stage(Scene):
             elif event.button == 5:
                 self.toggler.toggle_counterclockwise()
 
-    def restart_level(self, reset_collected_elements: bool):
-        self.player.spawn(PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)
+    def restart_level(self, reset_collected_elements: bool,
+                      player_reset_position: tuple[int, int] = (PLAYER_INITIAL_X_POSITION, PLAYER_INITIAL_Y_POSITION)):
         self.toggler.reset_state()
         for entity in self.moving_entities:
             entity.reset()
+        self.player.spawn(player_reset_position[0], player_reset_position[1])
         if reset_collected_elements:
             for cartridge in self.all_cartridges:
                 cartridge.collected = False
