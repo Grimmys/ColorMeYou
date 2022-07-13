@@ -57,6 +57,12 @@ class Player(Entity):
 
         self.death_played = False
 
+
+    def set_inactive(self):
+        self.velocity = vec(0, 0)
+        self.accel = vec(0, 0)
+        self.states = [False, False]
+
     def detect_collision(self, platforms: Sequence[Platform]):
         self.is_on_ground = False
         self.wall_collide = False

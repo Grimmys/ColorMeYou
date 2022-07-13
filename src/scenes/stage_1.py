@@ -72,6 +72,7 @@ class Stage(Scene):
             if self.cartridge_set.check_win():
                 SUCCESS_SOUND.play()
                 self.paper.collected = True
+                self.player.set_inactive()
                 self.next_scene = WinScene(self.screen, self.cartridge_set)
             else:
                 if not self.failure_played:
@@ -95,16 +96,19 @@ class Stage(Scene):
             platform.draw(self.screen)
         for cartridge in self.all_cartridges:
             cartridge.draw(self.screen)
-        self.paper.draw(self.screen)
-        self.player.draw(self.screen)
         self.toggler.draw(self.screen)
         if self.paper.collected:
-            self.screen.blit(self.current_lvl_win_frame, (self.screen.get_width() // 2 - lvl_win_1.get_height() // 2,
-                                                          self.screen.get_height() // 2 - lvl_win_1.get_height() // 2 - 200))
+            self.screen.blit(self.current_lvl_win_frame, (self.paper.rect.centerx,
+                                                          self.paper.rect.y + self.paper.rect.height - self.current_lvl_win_frame.get_height()))
+        else:
+            self.paper.draw(self.screen)
+            self.player.draw(self.screen)
         brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)
+        if self.paper.collected:
+            return
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 self.player.states[0] = True
@@ -113,8 +117,7 @@ class Stage(Scene):
             elif event.key == pygame.K_e:
                 self.player.jumping = True
             elif event.key == RESTART_KEY:
-                if not self.paper.collected:
-                    self.restart_level(True)
+                self.restart_level(True)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_s:
                 self.player.states[0] = False
