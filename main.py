@@ -12,6 +12,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     game_is_active = True
+    full_screen = False
     clock = pygame.time.Clock()
 
     active_scene = MainMenu(screen)
@@ -19,19 +20,19 @@ if __name__ == "__main__":
 
     while game_is_active:
         clock.tick(60)
-        fullscreen = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_is_active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     game_is_active = False
-                if event.key == pygame.K_F11 and not fullscreen:
-                    fullscreen = True
-                    pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-                # elif event.key == pygame.K_F11 and fullscreen:
-                #     fullscreen = False
-                #     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED)
+                if event.key == pygame.K_F11:
+                    if full_screen:
+                        full_screen = False
+                        pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+                    else:
+                        full_screen = True
+                        pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
             active_scene.process_event(event)
         active_scene.draw()
         active_scene.update()
