@@ -66,40 +66,23 @@ class Player(Entity):
 
     def handle_collision(self, platform):
         # vertical collision detection
-        if self.rect.centery < platform.rect.top:
+        if self.rect.centery < platform.rect.top and platform.rect.x <= self.rect.centerx <= platform.rect.x + platform.rect.width:
             self.rect.y = platform.rect.top - self.rect.height
             self.velocity.y = 0
             self.is_on_ground = True
             return
         # horizontal collision detection
-        if self.face_direction == RIGHT:
-            # platform pieces
-            if platform.rect.width > platform.rect.height:
-                if self.rect.centery > platform.rect.left:
-                    self.rect.right = platform.rect.left
-                    self.velocity.x = 0
-                    self.wall_collide = True
-                    return
-            # wall pieces
-            elif platform.rect.width < platform.rect.height:
-                if self.rect.right > platform.rect.left:
-                    self.rect.right = platform.rect.left
-                    self.velocity.x = 0
-                    self.wall_collide = True
-                    return
-        else:
-            if platform.rect.width > platform.rect.height:
-                if self.rect.centery < platform.rect.right:
-                    self.rect.left = platform.rect.right
-                    self.velocity.x = 0
-                    self.wall_collide = True
-                    return
-            elif platform.rect.width < platform.rect.height:
-                if self.rect.left < platform.rect.right:
-                    self.rect.left = platform.rect.right
-                    self.velocity.x = 0
-                    self.wall_collide = True
-                    return
+        if platform.rect.y <= self.rect.centery <= platform.rect.y + platform.rect.height:
+            if self.rect.centerx < platform.rect.left:
+                self.rect.right = platform.rect.left
+                self.velocity.x = 0
+                self.wall_collide = True
+                return
+            if self.rect.centerx > platform.rect.right:
+                self.rect.left = platform.rect.right
+                self.velocity.x = 0
+                self.wall_collide = True
+                return
 
     def death_event(self, moving_entities):
         # if pygame.Rect.colliderect(self.rect, death_line.rect):
