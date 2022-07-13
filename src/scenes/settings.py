@@ -36,13 +36,8 @@ class Levels(Entity):
 class Settings(Scene):
     def __init__(self, screen: pygame.Surface):
         super().__init__(screen)
-        self.position = (self.screen.get_width() // 2 - SETTINGS_SCENE_IMAGE.get_width() // 2,
-                         self.screen.get_height() // 2 - SETTINGS_SCENE_IMAGE.get_height() // 2)
-        self.close_button = Button(CLOSE_BUTTON_IMAGE, screen,
-                                   SETTINGS_SCENE_IMAGE.get_width() - CLOSE_BUTTON_IMAGE.get_width() -
-                                   CLOSE_BUTTON_DISTANCE_TO_BORDER + self.position[0],
-                                   CLOSE_BUTTON_DISTANCE_TO_BORDER + self.position[1],
-                                   CLOSE_BUTTON_IMAGE.get_width(), CLOSE_BUTTON_IMAGE.get_height())
+        self.position = (0, 0)
+        self.close_button = Button(CLOSE_BUTTON_IMAGE, screen, 922, 170, 20, 20)
         self.scene_bound_to_close_button = None
         self.decrease_button = Button(LEFT_ARROW_IMAGE, screen, 375, 422, 29, 40)
         self.increase_button = Button(RIGHT_ARROW_IMAGE, screen, 872, 422, 29, 40)
@@ -59,6 +54,7 @@ class Settings(Scene):
             self.screen.blit(self.increase_button.image, self.increase_button.rect)
         
         self.levels_bar.draw(self.screen)
+
         self.brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):

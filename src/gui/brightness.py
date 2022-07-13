@@ -31,3 +31,5 @@ class Brightness(Entity):
         self.surface.fill(self.color)
         self.surface.set_alpha(self.opacity)
         screen.blit(self.surface, (self.rect.x, self.rect.y))
+
+brightness = Brightness(0, 0, 1280, 720)
