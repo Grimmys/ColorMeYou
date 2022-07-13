@@ -10,6 +10,9 @@ class Entity:
     def draw(self, screen):
         pass
 
+    def update(self):
+        pass
+
     # reset to init position
     def reset(self):
         self.rect = self.initial_rect.copy()

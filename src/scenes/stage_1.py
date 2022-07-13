@@ -52,7 +52,7 @@ class Stage(Scene):
     def update(self):
         super().update()
         # update player
-        self.player.update_position()
+        self.player.update()
         self.player.walk_counter()
         self.player.detect_collision(self.platforms)
         # update platforms
@@ -81,6 +81,9 @@ class Stage(Scene):
         self.player.death_event(self.moving_entities)
 
         self.camera.center_camera(self.player, self.moving_entities)
+
+        if self.player.should_respawn:
+            self.restart_level()
 
         print(self.player.death, self.player.freefall_count)
 
