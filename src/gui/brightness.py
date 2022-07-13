@@ -1,5 +1,6 @@
 # blit brightness screen
 import pygame
+from src.constants import SCREEN_HEIGHT, SCREEN_WIDTH
 # from src.constants import INCREMENT_OPACITY
 
 from src.entities.entity import Entity
@@ -32,4 +33,5 @@ class Brightness(Entity):
         self.surface.set_alpha(self.opacity)
         screen.blit(self.surface, (self.rect.x, self.rect.y))
 
-brightness = Brightness(0, 0, 1280, 720)
+# init it here, use it for everything.
+brightness = Brightness(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)

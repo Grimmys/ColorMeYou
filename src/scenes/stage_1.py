@@ -11,8 +11,9 @@ from src.entities.paper import Paper
 from src.entities.platform import Platform
 from src.entities.platform_set import PlatformSet
 from src.entities.player import Player
-from src.entities.win_scene import WinScene
+from src.scenes.win_scene import WinScene
 from src.gui.toggler import Toggler
+from src.gui.brightness import brightness
 # load in three colored backgrounds
 # keep track of state stuff
 from src.keyboard_setup import RESTART_KEY
@@ -94,6 +95,7 @@ class Stage(Scene):
         self.paper.draw(self.screen)
         self.player.draw(self.screen)
         self.toggler.draw(self.screen)
+        brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)

@@ -35,8 +35,8 @@ class Cartridge(Entity):
         # draw indicators on screen
         if self.collected:
             if self.color == Color.CYAN:
-                pygame.draw.rect(screen, CYAN, (300, 10, 20, 20))
+                pygame.draw.rect(screen, CYAN, (300, 20, 20, 20))
             if self.color == Color.MAGENTA:
-                pygame.draw.rect(screen, MAGENTA, (340, 10, 20, 20))
+                pygame.draw.rect(screen, MAGENTA, (340, 20, 20, 20))
             if self.color == Color.YELLOW:
-                pygame.draw.rect(screen, YELLOW, (380, 10, 20, 20))
+                pygame.draw.rect(screen, YELLOW, (380, 20, 20, 20))

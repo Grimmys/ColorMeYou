@@ -4,12 +4,15 @@
 # play music
 
 import pygame
+from src.constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 from src.gui.button import Button
 from src.gui.load_sprites import start_button_img, settings_button_img
 from src.scenes.scene import Scene
 from src.scenes.settings import Settings
 from src.scenes.tutorial import Tutorial
+
+from src.gui.brightness import brightness
 
 MAIN_MENU_BACKGROUND = pygame.image.load("assets/images/mm.png")
 
@@ -35,6 +38,7 @@ class MainMenu(Scene):
         self.screen.blit(MAIN_MENU_BACKGROUND, (0, 0))
         for button in self.buttons:
             button.detect_hover()
+        brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)

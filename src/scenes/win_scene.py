@@ -1,5 +1,6 @@
 # win scene
 import pygame
+from src.gui.brightness import brightness
 
 import src.scenes.main_menu as main_menu
 from src.scenes.scene import Scene
@@ -16,6 +17,7 @@ class WinScene(Scene):
         super().draw()
         # check win condition here
         self.screen.blit(endscreens[0] if not self.cartridge_set.egg_win else endscreens[1], (0, 0))
+        brightness.draw(self.screen)
 
     def process_event(self, event: pygame.event.Event):
         super().process_event(event)
