@@ -6,3 +6,10 @@ Play as an ink drop traversing a world of subtractive color to reach its lover "
 Use a toggling system to interact with platforms of the relevant color. Watch your footing!\
 Collect all three ink cartridges scattered in the level before proceeding towards papier-san;\
 find the fourth "cartridge" for a surprise!
+
+# Controls
+
+* **ESF**: Player movement
+* **R**: Restart
+* **Q**: Quit
+* **F11**: Switch between fullscreen/windowed mode
